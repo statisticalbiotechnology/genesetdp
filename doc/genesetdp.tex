@@ -27,6 +27,15 @@ N_a(s,c)=\sum_{b=1}^{k_a}{k_a \choose b} N_{a-1}(s-ab,c-b) + N_{a-1}(s,c).
 \]
 
 
-This enables us to calculate $N$, by nested iterations over $s \in \{ RQ, RQ-1, \ldots 0 \}$ and $c \in \{ Q, Q-1, \ldots 1 \}$ over one single $(RQ+1) \times (Q+1)$ matrix
+This enables us to calculate $N$, by nested iterations over $s \in \{ RQ, RQ-1, \ldots 0 \}$ and $c \in \{ Q, Q-1, \ldots 1 \}$ over one single $(RQ+1) \times (Q+1)$ matrix.
+
+
+\subsection*{$p$ value calculation}
+
+Once we have our full score distribution, we can evaluate our score against the null hyptesis, $H_0$ : ``The Q query genes are random''. This can be expressed as an unbiased empirical $p$~value for obtaining a score $s$,
+
+\[
+p(s)=\frac{N(s')/2 +\sum_{s'=s+1}^{RQ} N(s')}{\sum_{s'=0}^{RQ} N(s')}
+\]
 
 \end{document}
