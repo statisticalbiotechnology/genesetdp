@@ -1,0 +1,19 @@
+\documentclass[11pt]{article}
+\begin{document}
+
+This algorithm deals with a genome of size $m$, where each gene $i$'s number of links to a given pathway is given by a index $l_i$. We also define $l_0=0$ and $l_{m+1}=0$. The number of genes having $a$ links to the investigated pathway is given by $k_a=\sum_{\{i:l_i=a\}}1$, and $r=\max_{\forall i}{l_i}$.
+We are interested in calculating the score distribution i.e. the number of times a summed number of links would appear for a query containing $q$ genes.
+We can do so by calculating the number of ways, $N_a(s,c)$, to obtain a score $s$, when summing up links for $c$ genes with up to $\le a$ links to the pathway.
+We first notice that there are $n\choose a$ ways to select $a$ from $n$ elements.
+
+This can be done by solving the recursion
+
+\[
+N_a(s,c)=\sum_{b=0}^{k_a}{k_a \choose b} N_{a-1}(s-ab,c-b),
+\]
+where $N_a(s',c')=0$ for all $s'\le 0$ or $c' \le -1$, with the exception for $N_{-1}(0,0)=1$.
+
+The final score distribution is given by $N(s)=N(s,m+1,q+1)$.
+
+
+\end{document}
