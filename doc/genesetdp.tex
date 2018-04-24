@@ -32,10 +32,10 @@ This enables us to calculate $N$, by nested iterations over $s \in \{ RQ, RQ-1, 
 
 \subsection*{$p$ value calculation}
 
-Once we have our full score distribution, we can evaluate our score against the null hyptesis, $H_0$ : ``The Q query genes are random''. This can be expressed as an unbiased empirical $p$~value for obtaining a score $s$,
+Once we have our full score distribution, we can evaluate our score against the null hyptesis, $H_0$ : ``The Q query genes are random''. This can be expressed as an unbiased empirical $p$~value for obtaining a score $f$,
 
 \[
-p(s)=\frac{N(s')/2 +\sum_{s'=s+1}^{RQ} N(s')}{\sum_{s'=0}^{RQ} N(s')}
+p(f)=\frac{N(f)/2 +\sum_{s=f+1}^{RQ} N(s)}{\sum_{s=0}^{RQ} N(s)}
 \]
 
 \end{document}
