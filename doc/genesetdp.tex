@@ -4,19 +4,29 @@
 In network-based gene set analysis one score a query set of genes $ \{g_1 \ldots g_Q\} $ from a genome with genes $\{g_1 \ldots g_G\}$ ($Q \le G$), and how they relate to a pathway $\{p_1 \ldots p_P\}$. In network-based gene set analysis the pathway maps to the genome through a network ${x_{ij}}$, where $x_{ij}=1$ if $g_i$ and $p_j$ are connected, or $x_{ij}=0$ otherwise. One frequently employed metric to score such pathways are to sum up all conections, i.e. the pathway score is $f=\sum_{i=1}^Q\sum_{j=1}^P x_{ij}$.
 We can reformulate such scores as a set of pathway specific gene scores by defining the number-of-links, $l_i\sum_{j=1}^P x_{ij}$, which gives us a score $f=\sum_{i=1}^Q l_i$.
 Such number-of-links, $l_i$, can be precomputed ahead of time for all genes $i, \ldots, G$.
-Furtheremore, the number of genes having $a$ links to the investigated pathway is given by $k_a=\sum_{\{i:l_i=a\}}1$, and $R=\max_{\forall i}{l_i}$.
-We are interested in calculating the score distribution i.e. the number of times a summed number of links would appear for a query containing $q$ genes.
+Furthermore, the number of genes having $a$ links to the investigated pathway is given by $k_a=\sum_{\{i:l_i=a\}}1$, and $R=\max_{\forall i}{l_i}$.
+
+To assess confidence metrics for $f$, we are interested in calculating the score distribution i.e. the number of times a summed number of links would appear for a query containing $Q$ genes.
 We can do so by calculating the number of ways, $N_a(s,c)$, to obtain a score $s$, when summing up links for $c$ genes with up to $\le a$ links to the pathway.
+
 We first notice that there are $n\choose a$ ways to select $a$ from $n$ elements.
 
-This can be done by solving the recursion
+This helps us formulate the recursion,
 
 \[
 N_a(s,c)=\sum_{b=0}^{k_a}{k_a \choose b} N_{a-1}(s-ab,c-b),
 \]
 where $N_a(s',c')=0$ for all $s'\le 0$ or $c' \le -1$, with the exception for $N_{-1}(0,0)=1$.
 
-The final score distribution is given by $N(s)=N(s,m+1,q+1)$.
+The final score distribution is given by $N(s)=N_R(s,Q)$.
 
+There is a memory efficient implementation. We first note that
+
+\[
+N_a(s,c)=\sum_{b=1}^{k_a}{k_a \choose b} N_{a-1}(s-ab,c-b) + N_{a-1}(s,c).
+\]
+
+
+This enables us to calculate $N$, by nested iterations over $s \in \{ RQ, RQ-1, \ldots 0 \}$ and $c \in \{ Q, Q-1, \ldots 1 \}$ over one single $(RQ+1) \times (Q+1)$ matrix
 
 \end{document}

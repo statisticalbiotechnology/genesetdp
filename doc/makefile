@@ -1,8 +1,8 @@
-main=standard
+main=genesetdp
 
-all: ${main}.pdf supplement.pdf diff.pdf
+all: ${main}.pdf # supplement.pdf diff.pdf
 
-${main}.pdf: ${main}.tex ${main}.bib # img/*
+${main}.pdf: ${main}.tex # ${main}.bib # img/*
 
 diff.tex: ${main}.tex
 	git show sub4:./$? > /tmp/$?
