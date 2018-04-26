@@ -1,5 +1,6 @@
 ## Core latex/pdflatex auxiliary files:
 genesetdp.pdf
+*.vtc
 *.aux
 *.lof
 *.log
