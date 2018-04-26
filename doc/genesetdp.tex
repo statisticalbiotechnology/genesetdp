@@ -1,24 +1,67 @@
-\documentclass[11pt]{article}
+\documentclass[a4paper,USenglish]{lipics-v2016}
+\usepackage{microtype}
+\bibliographystyle{plainurl}
+\title{A dynamic programing algorithm to assess the reliability of inferences from network enrichment analysis}
+\titlerunning{Dynamic Programing for Network Enrichment inferences} %optional, in case that the title is too long; the running title should fit into the top page column
+
+%% Please provide for each author the \author and \affil macro, even when authors have the same affiliation, i.e. for each author there needs to be the  \author and \affil macros
+\author[1]{Gustavo S. Jeuken}
+\author[2]{Lukas K\"{a}ll}
+\affil[1]{Science for Life Laboratory, School of
+Engineering Sciences in Chemistry, Biotechnology and Health,
+Royal Institute of Technology -- KTH, Box 1031, 17121 Solna, Sweden\\ \texttt{gustavo.jeuken@scilifelab.se}}
+\affil[2]{Science for Life Laboratory, School of
+Engineering Sciences in Chemistry, Biotechnology and Health,
+Royal Institute of Technology -- KTH, Box 1031, 17121 Solna, Sweden\\ \texttt{lukas.kall@scilifelab.se}}
+\authorrunning{G. S. Jeuken and L. K\"{a}ll}
 \begin{document}
 
-In network-based gene set analysis one score a query set of genes $ \{g_1 \ldots g_Q\} $ from a genome with genes $\{g_1 \ldots g_G\}$ ($Q \le G$), and how they relate to a pathway $\{p_1 \ldots p_P\}$. In network-based gene set analysis the pathway maps to the genome through a network ${x_{ij}}$, where $x_{ij}=1$ if $g_i$ and $p_j$ are connected, or $x_{ij}=0$ otherwise. One frequently employed metric to score such pathways are to sum up all conections, i.e. the pathway score is $f=\sum_{i=1}^Q\sum_{j=1}^P x_{ij}$.
-We can reformulate such scores as a set of pathway specific gene scores by defining the number-of-links, $l_i\sum_{j=1}^P x_{ij}$, which gives us a score $f=\sum_{i=1}^Q l_i$.
-Such number-of-links, $l_i$, can be precomputed ahead of time for all genes $i, \ldots, G$.
-Furthermore, the number of genes having $a$ links to the investigated pathway is given by $k_a=\sum_{\{i:l_i=a\}}1$, and $R=\max_{\forall i}{l_i}$.
+\maketitle
 
-To assess confidence metrics for $f$, we are interested in calculating the score distribution i.e. the number of times a summed number of links would appear for a query containing $Q$ genes.
-We can do so by calculating the number of ways, $N_a(s,c)$, to obtain a score $s$, when summing up links for $c$ genes with up to $\le a$ links to the pathway.
+\section*{Introduction}
 
-We first notice that there are $n\choose a$ ways to select $a$ from $n$ elements.
+Gene enrichement analysis (GEA) is commonly used to infer function from sets of analytes such as genes, transcripts proteins or metabolites\cite{tavazoie1999systematic,khatri2012ten}. The technique is used to esimate which functional modules such as complexes or pathways that are alterated between different biological conditions, such as disease state or treatment group. Particularly in expression analysis, GEA is used to assess alternation in activity of functional models by examining significantly different concentrations of analytes between experimental conditions.
 
-This helps us formulate the recursion,
+Most GEA methods are investigating the overlap between the investigated set of analytes, the {\em query set}, and a functional module, the {\em pathway set}, using hypergeometric test or a Fisher's exact test. However, variants such as Gene Set Enrichment Analysis (GSEA)\cite{subramanian2005gene} also includes information on expression levels of the analytes of the query set.
 
-\[
+A limiting factor of GEA are the pathway definition databases. While \url{http://pathguide.org} list 708 databases of
+pathway definitions\cite{bader2006pathguide},  some chritique has been voiced concerning the completenes and rigour of current pathway databases. Hence efforts have been directed to designing methods that extend the pathway definitions, by functional association networks, like STRING\cite{szklarczyk2014string}. Instead of directly examining the overlap between the query and pathway sets, one can evaluate the number of links in the functional association network that connect the query and pathway set\cite{shojaie2010network, alexeyenko2012network, glaab2012enrichnet, mccormack2013statistical, ogris2016novel, signorelli2016neat}. This is known as Network Enrichment Analysis (NEA).
+
+The quality of the inferences from NEA has previously been assessed by Monte carlo-based methods that investigates the scores distribution when evaluating the query set using random networks.
+
+Here, we present a dynamic programing algorithm to calculate the full score distribution of any query of a given number of analytes. The algorithm enables us to calculate well defined and exact statistics of inferences from NEA.  Using simulations we demonstarated that the algorithm produced unbiased statistics.
+
+\section*{Algorithm}
+
+
+In network-based gene set analysis one score a query set of genes $ \{g_1 \ldots g_Q\} $ from a genome with genes $\{g_1 \ldots g_G\}$ ($Q \le G$), and how they relate to a pathway $\{p_1 \ldots p_P\}$. In NEA the pathway maps to the genome through a network ${x_{ij}}$, where $x_{ij}=1$ if $g_i$ and $p_j$ are connected, or $x_{ij}=0$ otherwise. The pathways are scored by summing up all conections, i.e. the pathway score is
+
+\begin{equation}
+s=\sum_{i=1}^Q\sum_{j=1}^P x_{ij}.
+\label{eq:sum_ij}
+\end{equation}
+
+Here, we wanted to determine a full score distribution, {\em i.e.} the number of ways, $N(s)$, we can pick $Q$ genes and obtaining a score, $s$. This allows us to evaluate our score against the null hyptesis, $H_0$ : ``The Q query genes are randomly selected''. This can be expressed as an unbiased empirical $p$~value for obtaining a score $s$,
+
+\begin{equation}
+p(s)=\frac{N(s)/2 +\sum_{s'=s+1}^{S} N(s')}{\sum_{s'=0}^{S} N(s')},
+\end{equation}
+where $S$ is the maximal score.
+
+\subsection*{Computation of the full score distribution}
+
+We can reformulate Equation \ref{eq:sum_ij} by defining the number-of-links, $l_i\sum_{j=1}^P x_{ij}$, which gives us a score $s=\sum_{i=1}^Q l_i$. Such number-of-links, $l_i$, can be precomputed ahead of time for all genes $i, \ldots, G$.
+Furthermore, the number of genes having $a$ links to the investigated pathway is given by $k_a=\sum_{\{i:l_i=a\}}1$, and $R=\max_{i}{l_i}$.
+
+In our strive to calculate the score distribution, $N(s)$, we first want to investigate the number of ways, $N_a(s,c)$, to obtain a score $s$, when summing up links for $c$ genes with up to $\le a$ links to the pathway. This helps us formulate the recursion, using the fact that there are $k_a \choose b$ ways to select $b$ from $k_a$ elements, as
+\begin{equation}
 N_a(s,c)=\sum_{b=0}^{k_a}{k_a \choose b} N_{a-1}(s-ab,c-b),
-\]
+\end{equation}
 where $N_a(s',c')=0$ for all $s'\le 0$ or $c' \le -1$, with the exception for $N_{-1}(0,0)=1$.
 
 The final score distribution is given by $N(s)=N_R(s,Q)$.
+
+\subsection*{Implementation}
 
 There is a memory efficient implementation. We first note that
 
@@ -29,13 +72,12 @@ N_a(s,c)=\sum_{b=1}^{k_a}{k_a \choose b} N_{a-1}(s-ab,c-b) + N_{a-1}(s,c).
 
 This enables us to calculate $N$, by nested iterations over $s \in \{ RQ, RQ-1, \ldots 0 \}$ and $c \in \{ Q, Q-1, \ldots 1 \}$ over one single $(RQ+1) \times (Q+1)$ matrix.
 
+\section*{Methods}
 
-\subsection*{$p$ value calculation}
+\section*{Results}
 
-Once we have our full score distribution, we can evaluate our score against the null hyptesis, $H_0$ : ``The Q query genes are random''. This can be expressed as an unbiased empirical $p$~value for obtaining a score $f$,
+\section*{Discussion}
 
-\[
-p(f)=\frac{N(f)/2 +\sum_{s=f+1}^{RQ} N(s)}{\sum_{s=0}^{RQ} N(s)}
-\]
+\bibliography{refs}
 
 \end{document}
