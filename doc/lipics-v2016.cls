@@ -5,13 +5,13 @@
 %% The original source files were:
 %%
 %% lipics.dtx  (with options: `class')
-%% 
+%%
 %% -----------------------------------------------------------------
 %% Author:     le-tex publishing servicesf
-%% 
+%%
 %% This file is part of the lipics package for preparing
 %% LIPICS articles.
-%% 
+%%
 %%       Copyright (C) 2010 Schloss Dagstuhl
 %% -----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}[2005/12/01]
@@ -125,7 +125,7 @@
 \EventLogo{}
 \def\EventEditors#1{\gdef\@EventEditors{#1}}
 \EventEditors{}
-\def\EventNoEds#1{\gdef\@EventNoEds{#1}\ifnum #1>1 \gdef\@Eds{Editors}\fi }    
+\def\EventNoEds#1{\gdef\@EventNoEds{#1}\ifnum #1>1 \gdef\@Eds{Editors}\fi }
 \EventNoEds{1}
 \gdef\@Eds{Editor}
 \def\EventLongTitle#1{\gdef\@EventLongTitle{#1}}
@@ -472,7 +472,7 @@
         {.4em\@plus.275em\@minus.183em}
 \RequirePackage{color}
 \definecolor{darkgray}{rgb}{0.31,0.31,0.33}
-\RequirePackage{babel}
+\RequirePackage[american]{babel}
 \RequirePackage[tbtags,fleqn]{amsmath}
 \RequirePackage{amsthm}
 \thm@headfont{%
@@ -659,7 +659,7 @@
                        Digital Object Identifier\enskip}}
 \setcounter{page}{1}
 
-      
+
 \def\DOI#1{\gdef\@DOI{#1}}
 \DOI{}
 \endinput

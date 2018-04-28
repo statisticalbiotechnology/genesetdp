@@ -1,5 +1,6 @@
-\documentclass[a4paper,USenglish]{lipics-v2016}
-\usepackage{microtype}
+\documentclass[a4paper,american]{lipics-v2016}
+%\usepackage[USenglish]{babel}
+%\usepackage{microtype}
 \bibliographystyle{plainurl}
 \title{A dynamic programing algorithm to assess the reliability of inferences from network enrichment analysis}
 \titlerunning{Dynamic Programing for Network Enrichment inferences} %optional, in case that the title is too long; the running title should fit into the top page column
@@ -20,16 +21,16 @@ Royal Institute of Technology -- KTH, Box 1031, 17121 Solna, Sweden\\ \texttt{lu
 
 \section*{Introduction}
 
-Gene enrichement analysis (GEA) is commonly used to infer function from sets of analytes such as genes, transcripts proteins or metabolites\cite{tavazoie1999systematic,khatri2012ten}. The technique is used to esimate which functional modules such as complexes or pathways that are alterated between different biological conditions, such as disease state or treatment group. Particularly in expression analysis, GEA is used to assess alternation in activity of functional models by examining significantly different concentrations of analytes between experimental conditions.
+Gene enrichment analysis (GEA) is commonly used to infer function from sets of analytes such as genes, transcripts proteins or metabolites\cite{tavazoie1999systematic,khatri2012ten}. The technique is used to estimate which functional modules such as complexes or pathways that diverge between different biological conditions, such as disease state or treatment group. Particularly in expression analysis, GEA is used to assess alternation in activity of functional models by examining significantly different concentrations of analytes between experimental conditions.
 
 Most GEA methods are investigating the overlap between the investigated set of analytes, the {\em query set}, and a functional module, the {\em pathway set}, using hypergeometric test or a Fisher's exact test. However, variants such as Gene Set Enrichment Analysis (GSEA)\cite{subramanian2005gene} also includes information on expression levels of the analytes of the query set.
 
 A limiting factor of GEA are the pathway definition databases. While \url{http://pathguide.org} list 708 databases of
-pathway definitions\cite{bader2006pathguide},  some chritique has been voiced concerning the completenes and rigour of current pathway databases. Hence efforts have been directed to designing methods that extend the pathway definitions, by functional association networks, like STRING\cite{szklarczyk2014string}. Instead of directly examining the overlap between the query and pathway sets, one can evaluate the number of links in the functional association network that connect the query and pathway set\cite{shojaie2010network, alexeyenko2012network, glaab2012enrichnet, mccormack2013statistical, ogris2016novel, signorelli2016neat}. This is known as Network Enrichment Analysis (NEA).
+pathway definitions\cite{bader2006pathguide},  some chritique has been voiced concerning the completeness and rigor of current pathway databases. Hence efforts have been directed to designing methods that extend the pathway definitions, by functional association networks, like STRING\cite{szklarczyk2014string}. Instead of directly examining the overlap between the query and pathway sets, one can evaluate the number of links in the functional association network that connect the query and pathway set\cite{shojaie2010network, alexeyenko2012network, glaab2012enrichnet, mccormack2013statistical, ogris2016novel, signorelli2016neat}. This is known as Network Enrichment Analysis (NEA).
 
-The quality of the inferences from NEA has previously been assessed by Monte carlo-based methods that investigates the scores distribution when evaluating the query set using random networks.
+The quality of the inferences from NEA has previously been assessed by Monte Carlo-simulations   that investigates the scores distribution when evaluating the query set using random networks.
 
-Here, we present a dynamic programing algorithm to calculate the full score distribution of any query of a given number of analytes. The algorithm enables us to calculate well defined and exact statistics of inferences from NEA.  Using simulations we demonstarated that the algorithm produced unbiased statistics.
+Here, we present a dynamic programing algorithm, that we dubbed GeneSetDP, to calculate the full score distribution of any query of a given number of analytes. The algorithm enables us to calculate well defined and exact statistics of inferences from NEA.  Using simulations we demonstrated that the algorithm produced unbiased statistics.
 
 \section*{Algorithm}
 
@@ -41,16 +42,23 @@ s=\sum_{i=1}^Q\sum_{j=1}^P x_{ij}.
 \label{eq:sum_ij}
 \end{equation}
 
-Here, we wanted to determine a full score distribution, {\em i.e.} the number of ways, $N(s)$, we can pick $Q$ genes and obtaining a score, $s$. This allows us to evaluate our score against the null hyptesis, $H_0$ : ``The Q query genes are randomly selected''. This can be expressed as an unbiased empirical $p$~value for obtaining a score $s$,
+Here, we wanted to determine a full score distribution, {\em i.e.} the number of ways, $N(s)$, we can pick $Q$ genes and obtaining a score, $s$. This allows us to evaluate our score against the null hyptesis, $H_0$ : ``The Q query genes are randomly selected from the genes in the genome''. This can be expressed as an unbiased empirical $p$~value for obtaining a score $s$,
 
 \begin{equation}
 p(s)=\frac{N(s)/2 +\sum_{s'=s+1}^{S} N(s')}{\sum_{s'=0}^{S} N(s')},
+\label{eq:pval}
 \end{equation}
 where $S$ is the maximal score.
 
 \subsection*{Computation of the full score distribution}
 
-We can reformulate Equation \ref{eq:sum_ij} by defining the number-of-links, $l_i\sum_{j=1}^P x_{ij}$, which gives us a score $s=\sum_{i=1}^Q l_i$. Such number-of-links, $l_i$, can be precomputed ahead of time for all genes $i, \ldots, G$.
+We can reformulate Equation \ref{eq:sum_ij} by defining the number-of-links, $l_i=\sum_{j=1}^P x_{ij}$, which gives us a score,
+\begin{equation}
+s=\sum_{i=1}^Q l_i.
+\label{eq:sum_i}
+\end{equation}
+
+Such number-of-links, $l_i$, can be precomputed ahead of time for all genes $i, \ldots, G$.
 Furthermore, the number of genes having $a$ links to the investigated pathway is given by $k_a=\sum_{\{i:l_i=a\}}1$, and $R=\max_{i}{l_i}$.
 
 In our strive to calculate the score distribution, $N(s)$, we first want to investigate the number of ways, $N_a(s,c)$, to obtain a score $s$, when summing up links for $c$ genes with up to $\le a$ links to the pathway. This helps us formulate the recursion, using the fact that there are $k_a \choose b$ ways to select $b$ from $k_a$ elements, as
@@ -63,21 +71,71 @@ The final score distribution is given by $N(s)=N_R(s,Q)$.
 
 \subsection*{Implementation}
 
+\begin{lstlisting}[caption={
+The central part of the dynamic programing algorithm for finding $N(s)$. The function takes the vector of links per gene, $k_a$, as well as the number of query genes, $Q$ as an input. The function depends on two additional functions {\tt find\_maxscore(k,Q) }, which calculates the maximal score a query of size $Q$ can obtain, and {\tt ncr(a,b)}, which calculates $ a \choose b $.
+}
+, label=lst:gensetdp,captionpos=t,float,abovecaptionskip=-\medskipamount]
+def genesetdp(k,Q):
+    max_s = find_maxscore(k,Q)
+    N = np.zeros((max_s+1,Q+1),dtype='u4')
+    N[0,0] = 1
+
+    for a in range(len(k)):
+        for s in range(max_s,-1,-1):
+            for c in range(q,-1,-1):
+                for b in range(k[a],0,-1):
+                    if c-b>=0 and s-a*b>=0:
+                        N[s,c] += ncr(k[a], b) * N[s-a*b,c-b]
+    return N[:,q]
+\end{lstlisting}
 There is a memory efficient implementation. We first note that
 
 \[
-N_a(s,c)=\sum_{b=1}^{k_a}{k_a \choose b} N_{a-1}(s-ab,c-b) + N_{a-1}(s,c).
+N_a(s,c)=\sum_{b=1}^{k_a}{k_a \choose b} N_{a-1}(s-ab,c-b) + N_{a-1}(s,c)=D_a+N_{a-1}(s,c).
 \]
 
 
-This enables us to calculate $N$, by nested iterations over $s \in \{ RQ, RQ-1, \ldots 0 \}$ and $c \in \{ Q, Q-1, \ldots 1 \}$ over one single $(RQ+1) \times (Q+1)$ matrix.
+This enables us to calculate $N$ in place. That is we do not have to copy the dynamic programing matrix in each iteration over $a$,
+instead we can add a $D_a$ on to of previous iterations $N_{a-1}(s,c)$, by nested updates over $s \in \{ RQ, RQ-1, \ldots 0 \}$ and $c \in \{ Q, Q-1, \ldots 1 \}$. For details see Listing \ref{lst:gensetdp}.
 
 \section*{Methods}
 
+We dowloaded network definitions and the BinoX software version FIXME for comparisons from XXX \url{bitbucket/sonnhammerlab}. FIXME: add a more detailed description of the test set (i.e. organism and number of genes, pathways and network connections).
+
 \section*{Results}
+
+We implemented a Python program that read network and pathway definition files, and scored query sets according to Equation \ref{eq:sum_i}, the Dynamic Programming algorithm described in the Algorithm section, that enabled us to assign $p$~values according to Equation \ref{eq:pval}. We downloaded pathway and network definitions from the BinoX's website.
+
+To illustrate the $p$~value calculation procedure we plotted the score distribution N(s) for a query size of 10 (FIXME) genes in Figure \ref{fig:score_dist}.
+
+\begin{figure}[htb]
+  {\em FIXME: Add this figure.}
+%\includegraphics{img/FIXME.png}
+  \caption{{\bf Score distribution of a query size of 10 genes.} GeneSetDP enables us to calculate the full score distribution for a query of a given size, $Q$, i.e. how many ways one can reach a certain score when adding up the scores for $Q$ genes.}
+  \label{fig:score_dist}
+\end{figure}
+
+\subsection*{Test of Calibration}
+
+In order to test the statistical calibration of our method, we calculated $p$~values for FIXME random picks of gene sets from the investigated genome. As our selection is random, and following our null hypothesis, we expected the resulting $p$~values to be uniformly distributed. To test this we plotted the $p$~values against their quantile in Figure \ref{fig:calibration}. As a comparison we also added a calibration curve for the popular NEA method BinoX\cite{ogris2016novel}.
+
+We note that the calibration of
+
+\begin{figure}[htb]
+  {\em FIXME: Make a loglog plot of the relative rank and pvalues of GeneSetDP and BinoX. Add filled lines for y=x, and dotted lines for y=2x and y=0.5x.}
+%\includegraphics{img/FIXME.png}
+  \caption{{\bf Calibration of GeneSetDP.} We selected FIXME random sets from the investigated genome definition, and calculated their $p$ values with GeneSetDP. To test the $p$~values uniformity we plotted them against their quantile. We also added the calibration curve of BinoX, evaluated on the same random sets.}
+  \label{fig:calibration}
+\end{figure}
+
 
 \section*{Discussion}
 
-\bibliography{refs}
+Here we have implemented a method, GeneSetDP, to calculate unbiased $p$~values for inferences from NEA. We demonstrated that the method gave more accurate statistics than the popular BinoX method using random subsets of a genome.
+
+Here we made an explicit definition of the null hypothesis we employed, which centers on the query, $H_0$ : ``The Q query genes are randomly selected from the genes in the genome''. Previous implementation of NEA in the literature otherwise use Monte Carlo-simulation to determine parameters for various types parametric distributions, by perturbations of the investigated network. In practice such perturbations are hard to conduct in a manner that they still resemble the original network, and hence are difficult to use to calculate accurate statistics.
+
+
+\bibliography{./refs}
 
 \end{document}
