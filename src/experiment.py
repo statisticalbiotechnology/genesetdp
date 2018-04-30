@@ -20,7 +20,9 @@ k = genk.generate_k(pathway_genes)
 
 N = genesetdp.genesetdp(k,10)
 
-p = (np.flipud(np.cumsum(np.flipud(N))) - N/2)/sum(N)
+p_vals = (np.flipud(np.cumsum(np.flipud(N))) - N/2)/sum(N)
+
+####
 
 import matplotlib.pyplot as plt
 plt.step(np.arange(len(N))+1, N, where='mid')
@@ -29,3 +31,22 @@ plt.ylabel('N(s)')
 
 plt.savefig('F1_score_distribuition.png')
 
+
+####
+
+groups = pd.read_csv('../src/example-random/Random_Signatures.tsv', sep='\t')
+
+network = genk.network
+
+linked_genes = network.loc[pathway_genes].dropna().gene2.values.tolist()
+
+results = pd.DataFrame(columns = ['n','p'])
+## start for
+for i in range(1,10001):
+    groupname = 'group' + str(i)
+    genes = groups.loc[groups.GroupName==groupname,'#Node']
+    n = sum(linked_genes.count(x) for x in genes)
+    p = p_vals[n]
+    results.loc[groupname] = [n,p]
+
+results.to_csv('genesetDP_results.tsv', sep = '\t')
