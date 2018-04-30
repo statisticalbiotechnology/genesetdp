@@ -42,13 +42,13 @@ s=\sum_{i=1}^Q\sum_{j=1}^P x_{ij}.
 \label{eq:sum_ij}
 \end{equation}
 
-Here, we wanted to determine a full score distribution, {\em i.e.} the number of ways, $N(s)$, we can pick $Q$ genes and obtaining a score, $s$. This allows us to evaluate our score against the null hyptesis, $H_0$ : ``The Q query genes are randomly selected from the genes in the genome''. This can be expressed as an unbiased empirical $p$~value for obtaining a score $s$,
+Here, we wanted to determine a full score distribution, {\em i.e.} the number of ways, $N(s)$, we can pick $Q$ genes and obtaining a score, $s$. This allows us to evaluate our score against the null hyptesis, $H_0$ : ``The Q query genes are randomly selected from the genes in the genome''. This can be expressed as a mid $p$~value\cite{lancaster1961significance,hwang2001optimality} for obtaining a score $s$,
 
 \begin{equation}
 p(s)=\frac{N(s)/2 +\sum_{s'=s+1}^{S} N(s')}{\sum_{s'=0}^{S} N(s')},
 \label{eq:pval}
 \end{equation}
-where $S$ is the maximal score.
+where $S$ is the maximal score $s$ that $Q$ genes can obtain from Equation \ref{eq:sum_ij}.
 
 \subsection*{Computation of the full score distribution}
 
