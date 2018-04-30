@@ -21,7 +21,7 @@ def find_maxscore(k,q):
 def genesetdp(k,q):
     max_s = find_maxscore(k,q)
     #print(max_s,q)
-    N = np.zeros((max_s+1,q+1),dtype='u4')
+    N = np.zeros((max_s+1,q+1))
     N[0,0] = 1
 
     for a in range(len(k)):
