@@ -21,16 +21,16 @@ Royal Institute of Technology -- KTH, Box 1031, 17121 Solna, Sweden\\ \texttt{lu
 
 \section*{Introduction}
 
-Gene enrichment analysis (GEA) is commonly used to infer function from sets of analytes such as genes, transcripts proteins or metabolites\cite{tavazoie1999systematic,khatri2012ten}. The technique is used to estimate which functional modules such as complexes or pathways that diverge between different biological conditions, such as disease state or treatment group. Particularly in expression analysis, GEA is used to assess alternation in activity of functional models by examining significantly different concentrations of analytes between experimental conditions.
+Gene enrichment analysis (GEA) is commonly used to infer function from sets of analytes such as genes, transcripts proteins or metabolites\cite{tavazoie1999systematic,khatri2012ten}. The technique predict which functional modules, such as complexes or pathways, that are overrepresentated among a set of identified analytes. One prominent application of the technique is expression analysis, where GEA is regularly used to assess alternation in pathway activity by examining significantly different concentrations of analytes between biological conditions, such as disease state or treatment group.
 
 Most GEA methods are investigating the overlap between the investigated set of analytes, the {\em query set}, and a functional module, the {\em pathway set}, using hypergeometric test or a Fisher's exact test. However, variants such as Gene Set Enrichment Analysis (GSEA)\cite{subramanian2005gene} also includes information on expression levels of the analytes of the query set.
 
 A limiting factor of GEA are the pathway definition databases. While \url{http://pathguide.org} list 708 databases of
 pathway definitions\cite{bader2006pathguide},  some chritique has been voiced concerning the completeness and rigor of current pathway databases. Hence efforts have been directed to designing methods that extend the pathway definitions, by functional association networks, like STRING\cite{szklarczyk2014string}. Instead of directly examining the overlap between the query and pathway sets, one can evaluate the number of links in the functional association network that connect the query and pathway set\cite{shojaie2010network, alexeyenko2012network, glaab2012enrichnet, mccormack2013statistical, ogris2016novel, signorelli2016neat}. This is known as Network Enrichment Analysis (NEA).
 
-The quality of the inferences from NEA has previously been assessed by Monte Carlo-simulations   that investigates the scores distribution when evaluating the query set using random networks.
+The quality of the inferences from NEA has previously been assessed by Monte Carlo-simulations that investigates the scores distribution when evaluating the query set using random networks.
 
-Here, we present a dynamic programing algorithm, that we dubbed GeneSetDP, to calculate the full score distribution of any query of a given number of analytes. The algorithm enables us to calculate well defined and exact statistics of inferences from NEA.  Using simulations we demonstrated that the algorithm produced unbiased statistics.
+Here, we present a dynamic programing algorithm, that we dubbed GeneSetDP, that calculate the full score distribution of any query of a given size. The algorithm enables us to calculate well defined and exact statistics of inferences from NEA.  Using simulations we demonstrated that the algorithm produced unbiased statistics.
 
 \section*{Algorithm}
 
