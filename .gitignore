@@ -1,3 +1,5 @@
+## Python intermediates
+*.pyc
 ## Core latex/pdflatex auxiliary files:
 genesetdp.pdf
 *.vtc
