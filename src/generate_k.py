@@ -17,6 +17,8 @@ network = network_one.iloc[:,[0,1]].reset_index(drop=True)
 network.columns = ['gene1','gene2']
 network = network.set_index('gene1')
 
+n_genes = len(np.unique(network.index))
+
 def generate_k(pathway_genes):
     links = network.loc[pathway_genes].dropna()
 
@@ -24,6 +26,9 @@ def generate_k(pathway_genes):
 
     k = k_proto.loc[list(range(max(k_proto.index)+1))]
     k[k.isna()] = 0
-    k = np.array(k[1:], dtype='u4')
     
+    zero_link_genes = n_genes - sum(k)
+    k = np.array(k[1:], dtype='u4')
+    k = np.insert(k,0,zero_link_genes)
+
     return k
