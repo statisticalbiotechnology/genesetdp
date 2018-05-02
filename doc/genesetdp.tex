@@ -100,13 +100,13 @@ instead we can add a $D_a$ on to of previous iterations $N_{a-1}(s,c)$, by neste
 
 \section*{Methods}
 
-We dowloaded network definitions and the BinoX software version FIXME for comparisons from XXX \url{bitbucket/sonnhammerlab}. FIXME: add a more detailed description of the test set (i.e. organism and number of genes, pathways and network connections).
+We dowloaded network definitions and the BinoX software (on 2018/04/28) for comparisons from XXX \url{bitbucket/sonnhammerlab}. FIXME: add a more detailed description of the test set (i.e. organism and number of genes, pathways and network connections).
 
 \section*{Results}
 
 We implemented a Python program that read network and pathway definition files, and scored query sets according to Equation \ref{eq:sum_i}, the Dynamic Programming algorithm described in the Algorithm section, that enabled us to assign $p$~values according to Equation \ref{eq:pval}. We downloaded pathway and network definitions from the BinoX's website.
 
-To illustrate the $p$~value calculation procedure we plotted the score distribution N(s) for a query size of 10 (FIXME) genes in Figure \ref{fig:score_dist}.
+To illustrate the $p$~value calculation procedure we plotted the score distribution N(s) for a query size of 10 genes in Figure \ref{fig:score_dist}.
 
 \begin{figure}[htb]
 		\begin{center}
@@ -119,7 +119,7 @@ To illustrate the $p$~value calculation procedure we plotted the score distribut
 
 \subsection*{Test of Calibration}
 
-In order to test the statistical calibration of our method, we calculated $p$~values for FIXME random picks of gene sets from the investigated genome. As our selection is random, and following our null hypothesis, we expected the resulting $p$~values to be uniformly distributed. To test this we plotted the $p$~values against their quantile in Figure \ref{fig:calibration}. As a comparison we also added a calibration curve for the popular NEA method BinoX\cite{ogris2016novel}.
+In order to test the statistical calibration of our method, we calculated $p$~values for 10000 random picks of gene sets from the investigated genome. As our selection is random, and following our null hypothesis, we expected the resulting $p$~values to be uniformly distributed. To test this we plotted the $p$~values against their quantile in Figure \ref{fig:calibration}. As a comparison we also added a calibration curve for the popular NEA method BinoX\cite{ogris2016novel}.
 
 We note that the calibration of
 
@@ -129,7 +129,7 @@ We note that the calibration of
 		\end{center}
 
 %\includegraphics{img/FIXME.png}
-  \caption{{\bf Calibration of GeneSetDP.} We selected FIXME random sets from the investigated genome definition, and calculated their $p$ values with GeneSetDP. To test the $p$~values uniformity we plotted them against their quantile. We also added the calibration curve of BinoX, evaluated on the same random sets.}
+  \caption{{\bf Calibration of GeneSetDP.} We selected 10000 random sets from the investigated genome definition, and calculated their $p$ values with GeneSetDP. To test the $p$~values uniformity we plotted them against their quantile. We also added the calibration curve of BinoX, evaluated on the same random sets.}
   \label{fig:calibration}
 \end{figure}
 
