@@ -20,7 +20,7 @@ binox.loc[np.isnan(binox)] = 1
 binox_sorted = binox.sort_values()
 binox_sorted.index = (np.arange(len(binox_sorted.index))+1)/len(binox_sorted.index)
 
-genesetdp_sorted = genesetdp['p'].dropna().sort_values()
+genesetdp_sorted = genesetdp['p'].sort_values()
 genesetdp_sorted.index = (np.arange(len(genesetdp_sorted.index))+1)/len(genesetdp_sorted)
 
 
