@@ -33,9 +33,13 @@ plt.loglog(x_y, color = 'r', alpha = 0.5)
 plt.loglog(x_2y, '--',color = 'b', alpha = 0.5)
 plt.loglog(x_halfy, '--',color = 'b', alpha = 0.5)
 
-plt.legend(['BinoX', 'genesetDP'])
+plt.legend(['BinoX', 'genesetDP', 'x=y', 'x=[0.5,2]y'])
+plt.ylabel('p-values')
+plt.xlabel('relative rank')
 
-plt.show()
+plt.savefig('F2_calibration.png')
+
+
 
 
 
