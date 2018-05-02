@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 
+import sys
+sys.path.insert(0, '../src')
 import generate_k as genk
 import genesetdp
 
@@ -25,7 +27,7 @@ p_vals = (np.flipud(np.cumsum(np.flipud(N))) - N/2)/sum(N)
 ####
 
 import matplotlib.pyplot as plt
-plt.step(np.arange(len(N))+1, N, where='mid')
+plt.step(np.arange(len(N)), N, where='mid')
 plt.xlabel('score')
 plt.ylabel('N(s)')
 
