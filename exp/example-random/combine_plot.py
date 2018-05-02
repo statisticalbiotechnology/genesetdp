@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
+
 
 genesetdp = pd.read_csv('genesetDP_results.tsv', sep='\t', index_col=0)
 
@@ -26,6 +28,9 @@ x_y = pd.DataFrame(np.arange(0,1,0.001), index = np.arange(0,1,0.001))
 x_2y = pd.DataFrame(np.arange(0,1,0.001)*2, index = np.arange(0,1,0.001))
 x_halfy = pd.DataFrame(np.arange(0,0.5,0.001), index = np.arange(0,0.5,0.001)*2)
 
+sns.set_style("ticks")
+sns.despine()
+
 
 plt.loglog(binox_sorted, '.')
 plt.loglog(genesetdp_sorted, '.')
@@ -33,9 +38,8 @@ plt.loglog(x_y, '--', color = 'r', alpha = 0.5)
 plt.loglog(x_2y, ':',color = 'b', alpha = 0.5)
 plt.loglog(x_halfy, ':',color = 'b', alpha = 0.5)
 
-plt.legend(['BinoX', 'GeneSetDP', 'x=y', 'x=[0.5,2]y'])
-plt.ylabel('p-values')
-plt.xlabel('relative rank')
+plt.legend(['BinoX', 'GeneSetDP', 'y=x', 'y=0.5x,y=2x'])
+plt.ylabel('$p$ value')
+plt.xlabel('Normalized rank')
 
 plt.savefig('F2_calibration.png')
-
