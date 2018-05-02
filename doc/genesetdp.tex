@@ -109,7 +109,9 @@ We implemented a Python program that read network and pathway definition files, 
 To illustrate the $p$~value calculation procedure we plotted the score distribution N(s) for a query size of 10 (FIXME) genes in Figure \ref{fig:score_dist}.
 
 \begin{figure}[htb]
-  {\em FIXME: Add this figure.}
+		\begin{center}
+				\includegraphics[scale=0.8]{figures/F1_score_distribuition.png}
+		\end{center}
 %\includegraphics{img/FIXME.png}
   \caption{{\bf Score distribution of a query size of 10 genes.} GeneSetDP enables us to calculate the full score distribution for a query of a given size, $Q$, i.e. how many ways one can reach a certain score when adding up the scores for $Q$ genes.}
   \label{fig:score_dist}
@@ -122,7 +124,10 @@ In order to test the statistical calibration of our method, we calculated $p$~va
 We note that the calibration of
 
 \begin{figure}[htb]
-  {\em FIXME: Make a loglog plot of the relative rank and pvalues of GeneSetDP and BinoX. Add filled lines for y=x, and dotted lines for y=2x and y=0.5x.}
+		\begin{center}
+				\includegraphics[scale=0.8]{figures/F2_calibration.png}
+		\end{center}
+
 %\includegraphics{img/FIXME.png}
   \caption{{\bf Calibration of GeneSetDP.} We selected FIXME random sets from the investigated genome definition, and calculated their $p$ values with GeneSetDP. To test the $p$~values uniformity we plotted them against their quantile. We also added the calibration curve of BinoX, evaluated on the same random sets.}
   \label{fig:calibration}
