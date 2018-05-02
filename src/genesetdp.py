@@ -27,13 +27,9 @@ def genesetdp(k,q):
     for a in range(len(k)):
         for s in range(max_s,-1,-1):
             for c in range(q,-1,-1):
-                for b in range(k[a],0,-1): # Skipping zero (leftover)
+                for b in range(k[a],0,-1):
                     if c-b>=0 and s-a*b>=0:
-                        #print("pre\n",N,"a=",a,"s=",s,"c=",c,"b=",b,"k[a]=",k[a],"N[s-a*b,c-b]=",N[s-a*b,c-b],s-a*b,c-b)
                         N[s,c] += ncr(k[a], b) * N[s-a*b,c-b]
-                        #print("post\n",N,"a=",a,"s=",s,"c=",c,"b=",b,"k[a]=",k[a])
-                    #else:
-                        #print("skip", N,"a=",a,"s=",s,"c=",c,"b=",b,"k[a]=",k[a],s-a*b,c-b)
     return N[:,q]
 
 if __name__ == "__main__":
