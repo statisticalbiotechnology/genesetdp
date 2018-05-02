@@ -101,10 +101,10 @@ instead we can add a $D_a$ on to of previous iterations $N_{a-1}(s,c)$, by neste
 \section*{Methods}
 
 We dowloaded network definitions and the BinoX software (on 2018/04/28) for comparisons from XXX \url{bitbucket/sonnhammerlab}. FIXME: add a more detailed description of the test set (i.e. organism and number of genes, pathways and network connections).
-
+Troughout this study, BinoX was run with the default parameters.
 \section*{Results}
 
-We implemented a Python program that read network and pathway definition files, and scored query sets according to Equation \ref{eq:sum_i}, the Dynamic Programming algorithm described in the Algorithm section, that enabled us to assign $p$~values according to Equation \ref{eq:pval}. We downloaded pathway and network definitions from the BinoX's website.
+We implemented a Python program that read network and pathway definition files, and scored query sets according to Equation \ref{eq:sum_i}, the Dynamic Programming algorithm described in the Algorithm section, that enabled us to assign $p$~values according to Equation \ref{eq:pval}. We downloaded pathway and network definitions from the BinoX's website and used the same network treshold as BinoX default ($0.7$).
 
 To illustrate the $p$~value calculation procedure we plotted the score distribution N(s) for a query size of 10 genes in Figure \ref{fig:score_dist}.
 
