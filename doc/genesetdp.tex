@@ -81,8 +81,8 @@ def genesetdp(k,Q):
 
     for a in range(len(k)):
         for s in range(max_s,-1,-1):
-            for c in range(q,-1,-1):
-                for b in range(k[a],0,-1):
+            for c in range(Q,-1,-1):
+                for b in range(k[a],0,-1): # Stop at b=1
                     if c-b>=0 and s-a*b>=0:
                         N[s,c] += ncr(k[a], b) * N[s-a*b,c-b]
     return N[:,q]
@@ -94,26 +94,31 @@ N_a(s,c)=\sum_{b=1}^{k_a}{k_a \choose b} N_{a-1}(s-ab,c-b) + N_{a-1}(s,c)=D_a+N_
 \]
 
 
-This enables us to calculate $N$ in place. That is we do not have to copy the dynamic programing matrix in each iteration over $a$,
-instead we can add a $D_a$ on to of previous iterations $N_{a-1}(s,c)$, by nested updates over $s \in \{ RQ, RQ-1, \ldots 0 \}$ and $c \in \{ Q, Q-1, \ldots 1 \}$. For details see Listing \ref{lst:gensetdp}.
+This enables us to calculate $N$ in-place, at least as long as we update the elements in $N_a$ in a reverse order so that we do not alter elemets from $N_{a-1}$ still needed to update subsequent elements. That is, we do not have to copy the dynamic programing matrix in each iteration over $a$, instead we can add a $D_a$ on to of previous iterations $N_{a-1}(s,c)$, by nested updates over $s \in \{ RQ, RQ-1, \ldots 0 \}$ and $c \in \{ Q, Q-1, \ldots 1 \}$. For details see Listing \ref{lst:gensetdp}.
 
 \section*{Methods}
 
-We dowloaded network definitions and the BinoX software (on 2018-04-28) for comparisons from XXX \url{bitbucket/sonnhammerlab}. The acompaning example files include a pathway definition file that groups 6819 genes into 289 human pathwats, and a network definition file that, after tresholding, yeilds 1244992 links bewtween those genes.
+We dowloaded network definitions and the BinoX software (on 2018-04-28) for comparisons from \url{https://bitbucket.org/sonnhammergroup/binox}. BinoX was run with the default parameters.
 % FIXME: add a more detailed description of the test set (i.e. organism and number of genes, pathways and network connections).
-Troughout this study, BinoX was run with the default parameters, and we chose Glycolisi/Glucogenesis as the reference pathway, as it ocontains a number of genes that is median to the set.
+
+We also downloaded the NEA example given at the BinoX web site. The example files include a pathway definition file that groups $6819$ genes into $289$ human pathways, and a network definition file that, after tresholding with a score of $0.7$, yeilds $1244992$ links bewtween those genes.
+
+As an representative example for we chose the Glycolysis/Gluconeogenesis pathway, as it contained a number of genes that coincided with the median number of genes of the pathway definition file.
+
+
+
 \section*{Results}
 
 We implemented a Python program that read network and pathway definition files, and scored query sets according to Equation \ref{eq:sum_i}, the Dynamic Programming algorithm described in the Algorithm section, that enabled us to assign $p$~values according to Equation \ref{eq:pval}. We downloaded pathway and network definitions from the BinoX's website and used the same network treshold as BinoX default ($0.7$).
 
-To illustrate the $p$~value calculation procedure we plotted the score distribution N(s) for a query size of 10 genes in Figure \ref{fig:score_dist}.
+To illustrate the $p$~value calculation procedure we plotted the score distribution N(s) for a query size of 25 genes in Figure \ref{fig:score_dist}.
 
 \begin{figure}[htb]
 		\begin{center}
 				\includegraphics[scale=0.8]{figures/F1_score_distribuition.png}
 		\end{center}
-%\includegraphics{img/FIXME.png}
-  \caption{{\bf Score distribution of a query size of 10 genes.} GeneSetDP enables us to calculate the full score distribution for a query of a given size, $Q$, i.e. how many ways one can reach a certain score when adding up the scores for $Q$ genes.}
+%FIXME: Do not use figure numbers in their file name, this creates havoc if you want to reorganize them later
+  \caption{{\bf Score distribution of a query size of 25 genes against the Glycolysis/Gluconeogenesis pathway.} GeneSetDP enables us to calculate the full score distribution for a query of a given size, $Q$, i.e. how many ways one can reach a certain score when adding up the scores for $Q$ genes.}
   \label{fig:score_dist}
 \end{figure}
 
@@ -129,7 +134,7 @@ We note that the calibration of
 		\end{center}
 
 %\includegraphics{img/FIXME.png}
-  \caption{{\bf Calibration of GeneSetDP.} We selected 10000 random sets from the investigated genome definition, and calculated their $p$ values with GeneSetDP. To test the $p$~values uniformity we plotted them against their quantile. We also added the calibration curve of BinoX, evaluated on the same random sets.}
+  \caption{{\bf Calibration of GeneSetDP.} We selected 10000 random sets from the investigated genome definition, and calculated their $p$ values with GeneSetDP against the Glycolysis/Gluconeogenesis pathway. To test the $p$~values uniformity we plotted them against their Normalized rank. We also added the calibration curve of BinoX, evaluated on the same random sets.}
   \label{fig:calibration}
 \end{figure}
 
@@ -138,8 +143,9 @@ We note that the calibration of
 
 Here we have implemented a method, GeneSetDP, to calculate unbiased $p$~values for inferences from NEA. We demonstrated that the method gave more accurate statistics than the popular BinoX method using random subsets of a genome.
 
-Here we made an explicit definition of the null hypothesis we employed, which centers on the query, $H_0$ : ``The Q query genes are randomly selected from the genes in the genome''. Previous implementation of NEA in the literature otherwise use Monte Carlo-simulation to determine parameters for various types parametric distributions, by perturbations of the investigated network. In practice such perturbations are hard to conduct in a manner that they still resemble the original network, and hence are difficult to use to calculate accurate statistics.
+It should be noted that our outlined method a score distribution could work well with Monte Carlo-sampling as well, by sampling random gene sets of size $Q$, which would be faster and easier to understand than the theory of how to permute networks.
 
+Here we made an explicit definition of the null hypothesis we employed, which centers on the query, $H_0$ : ``The Q query genes are randomly selected from the genes in the genome''. Previous implementation of NEA in the literature otherwise use Monte Carlo-simulation to determine parameters for various types parametric distributions, by perturbations of the investigated network. In practice such perturbations are hard to conduct in a manner that they still resemble the original network, and hence are difficult to use to calculate accurate statistics. In general, it is easier to understand null models that relates to user actions, than null models that relates to model parameters.
 
 \bibliography{./refs}
 
