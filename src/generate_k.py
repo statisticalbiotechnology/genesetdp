@@ -10,7 +10,7 @@ network_file = 'Network.tsv'
 network_proto = pd.read_csv(path + network_file, sep='\t')
 
 ## manipulate network
-network_treshold = 0.99
+network_treshold = 0.7
 network_cut = network_proto['#0:PFC'] >= network_treshold
 network_one = network_proto.loc[network_cut]
 network = network_one.iloc[:,[0,1]].reset_index(drop=True)
