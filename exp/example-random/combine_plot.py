@@ -29,17 +29,13 @@ x_halfy = pd.DataFrame(np.arange(0,0.5,0.001), index = np.arange(0,0.5,0.001)*2)
 
 plt.loglog(binox_sorted, '.')
 plt.loglog(genesetdp_sorted, '.')
-plt.loglog(x_y, color = 'r', alpha = 0.5)
-plt.loglog(x_2y, '--',color = 'b', alpha = 0.5)
-plt.loglog(x_halfy, '--',color = 'b', alpha = 0.5)
+plt.loglog(x_y, '--', color = 'r', alpha = 0.5)
+plt.loglog(x_2y, ':',color = 'b', alpha = 0.5)
+plt.loglog(x_halfy, ':',color = 'b', alpha = 0.5)
 
 plt.legend(['BinoX', 'GeneSetDP', 'x=y', 'x=[0.5,2]y'])
 plt.ylabel('p-values')
 plt.xlabel('relative rank')
 
 plt.savefig('F2_calibration.png')
-
-
-
-
 
