@@ -1,4 +1,3 @@
-\documentclass[a4paper,american]{lipics-v2016}
 %\usepackage[USenglish]{babel}
 %\usepackage{microtype}
 \bibliographystyle{plainurl}
@@ -30,6 +29,8 @@ Gene enrichment analysis (GEA) is commonly used to infer function from sets of a
 Most GEA methods are investigating the overlap between the investigated set of analytes, the {\em query set}, and a functional module, the {\em pathway set}, using hypergeometric test or a Fisher's exact test. However, variants such as Gene Set Enrichment Analysis (GSEA)\cite{subramanian2005gene} also includes information on expression levels of the analytes of the query set.
 
 A limiting factor of GEA is the pathway definition databases. While \url{http://pathguide.org} list 708 databases of pathway definitions\cite{bader2006pathguide},  some critique has been voiced concerning the completeness and rigor of current pathway databases. Hence efforts have been directed to designing methods that extend the pathway definitions, by functional association networks, like STRING\cite{szklarczyk2014string}. Instead of directly examining the overlap between the query and pathway sets, one can evaluate the number of links in the functional association network that connect the query and pathway set\cite{shojaie2010network, alexeyenko2012network, glaab2012enrichnet, mccormack2013statistical, ogris2016novel, signorelli2016neat}. This is known as Network Enrichment Analysis (NEA).
+
+FIXME: Review the mentioned methods. Particularly which null models do they use?
 
 The quality of the inferences from NEA has previously been assessed by Monte Carlo-simulations that investigates the scores distribution when evaluating the query set using random networks.
 
