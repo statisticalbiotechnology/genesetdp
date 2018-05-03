@@ -33,7 +33,9 @@ A limiting factor of GEA is the pathway definition databases. While \url{http://
 
 FIXME: Review the mentioned methods. Particularly which null models do they use?
 
-The quality of the inferences from NEA has previously been assessed by Monte Carlo-simulations that investigates the scores distribution when evaluating the query set using random networks.
+The quality of the inferences from NEA has previously been assessed by Monte Carlo-simulations that investigates the scores distribution when evaluating the query set using random networks which are generated using methods with varying degrees of topological conservation.
+
+Since these methods of network randomization are not completely random, they introduce bias in the statistics that may or may not be desired, as the set of random networks is much larger than the ones of random networks that retain a certain topological characteristic. And the somewhat inaccessible process of so randomising networks produces statistics that are equaly hard to interpret. FIXME: Should this be in the dicussion?
 
 Here, we present a dynamic programming algorithm, that we dubbed GeneSetDP, that calculates the score distribution of any query of a given size. The algorithm enables us to calculate well-defined statistics of inferences from NEA.  Using simulations we demonstrated that the algorithm produced unbiased statistics.
 
@@ -146,7 +148,11 @@ We note that the calibration of GeneSetDP is slightly conservative, i.e. the cal
 
 \section*{Discussion}
 
-Here we have implemented a method, GeneSetDP, to calculate unbiased $p$~values for inferences from NEA. We demonstrated that the method gave more accurate statistics than the popular BinoX method using random subsets of a genome.
+Here we have implemented a method, GeneSetDP, to calculate unbiased $p$~values for inferences from NEA. We demonstrated that the method gave more accurate statistics than the popular BinoX method using random subsets of a genome. 
+
+FIXME: Is it ok to state the method is more accurate if we are testing it agains a different null hypothesis
+
+FIXME: What about: 
 
 It should be noted that our outlined method a score distribution could work well with Monte Carlo-sampling as well, by sampling random gene sets of size $Q$, which would be faster and easier to understand than the theory of how to permute networks.
 
