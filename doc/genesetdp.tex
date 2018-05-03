@@ -27,7 +27,7 @@ FIXME
 
 Gene enrichment analysis (GEA) is commonly used to infer function from sets of analytes such as genes, transcripts proteins or metabolites\cite{tavazoie1999systematic,khatri2012ten}. The technique estimates which functional modules, such as complexes or pathways, that are overrepresented among a set of identified analytes. One prominent application of the technique is expression analysis, where GEA is regularly used to assess alternation in pathway activity by examining significantly different concentrations of analytes between biological conditions, such as disease state or treatment group.
 
-Most GEA methods are investigating the overlap between the investigated set of analytes, the {\em query set}, and a functional module, the {\em pathway set}, using hypergeometric test or a Fisher's exact test. However, variants such as Gene Set Enrichment Analysis (GSEA)\cite{subramanian2005gene} also includes information on expression levels of the analytes of the query set.
+Most GEA methods are assessing the overlap between the investigated set of analytes, the {\em query set}, and a functional module, the {\em pathway set}, using hypergeometric test or a Fisher's exact test. However, variants such as Gene Set Enrichment Analysis (GSEA)\cite{subramanian2005gene} also includes information on expression levels of the analytes of the query set.
 
 A limiting factor of GEA is the pathway definition databases. While \url{http://pathguide.org} list 708 databases of pathway definitions\cite{bader2006pathguide},  some critique has been voiced concerning the completeness and rigor of current pathway databases. Hence efforts have been directed to designing methods that extend the pathway definitions, by functional association networks, like STRING\cite{szklarczyk2014string}. Instead of directly examining the overlap between the query and pathway sets, one can evaluate the number of links in the functional association network that connect the query and pathway set\cite{shojaie2010network, alexeyenko2012network, glaab2012enrichnet, mccormack2013statistical, ogris2016novel, signorelli2016neat}. This is known as Network Enrichment Analysis (NEA).
 
@@ -35,7 +35,7 @@ FIXME: Review the mentioned methods. Particularly which null models do they use?
 
 The quality of the inferences from NEA has previously been assessed by Monte Carlo-simulations that investigates the scores distribution when evaluating the query set using random networks which are generated using methods with varying degrees of topological conservation.
 
-Since these methods of network randomization are not completely random, they introduce bias in the statistics that may or may not be desired, as the set of random networks is much larger than the ones of random networks that retain a certain topological characteristic. Also, the somewhat inaccessible process used to randomize networks produces statistics that are equaly hard to interpret as the null hypothesis becomes complex. FIXME: Should this be in the dicussion?
+Since these methods of network randomization are not completely random, they introduce bias in the statistics that may or may not be desirable, as the set of random networks is much larger than the ones of random networks that retain a certain topological characteristic. Also, the somewhat inaccessible process used to randomize networks produces statistics that are equaly hard to interpret as the null hypothesis becomes complex. FIXME: Should this be in the dicussion?
 
 Here, we present a dynamic programming algorithm, that we dubbed GeneSetDP, that calculates the score distribution of any query of a given size. The algorithm enables us to calculate well-defined statistics of inferences from NEA.  Using simulations we demonstrated that the algorithm produced unbiased statistics.
 
@@ -110,7 +110,7 @@ We downloaded network definitions and the BinoX software (on 2018-04-28) for com
 
 We also downloaded the NEA example given at the BinoX web site. The example files include a pathway definition file that groups $6819$ genes into $289$ human pathways and a network definition file that, after thresholding with a score of $0.7$, gave $1244992$ links between those genes.
 
-As a representative example for we chose the ``Glycolysis/Gluconeogenesis'' pathway, as it contained a number of genes that coincided with the median number of genes of the pathway definition file.
+As a representative example for we chose the ``Glycolysis/Gluconeogenesis'' pathway, as it contained a number of genes that coincided with the median number of genes of the pathways in the definition file.
 
 
 
@@ -150,9 +150,9 @@ We note that the calibration of GeneSetDP is slightly conservative, i.e. the cal
 
 Here we have implemented a method, GeneSetDP, to calculate unbiased $p$~values for inferences from NEA. We demonstrated that the method gave more accurate statistics than the popular BinoX method using random subsets of a genome. 
 
-FIXME: Is it ok to state the method is more accurate if we are testing it agains a different null hypothesis
+FIXME: Is it ok to state the method is more accurate if we are testing it agains a different null hypothesis?
 
-It should be noted that our outlined method a score distribution could work well with Monte Carlo-sampling as well, by sampling random gene sets of size $Q$, which would be faster and easier to understand than the theory of how to permute networks.
+It should be noted that our outlined method a could work well with Monte Carlo-sampling, by sampling random gene sets of size $Q$, which would be faster and easier to understand than the theory of how to permute networks.
 
 Here we made an explicit definition of the null hypothesis we employed, which centers on the query, $H_0$ : ``The Q query genes are randomly selected from the genes in the genome''. Previous implementations of NEA in the literature otherwise use Monte Carlo-simulation to determine parameters for various types parametric distributions, by perturbations of the investigated network. In practice, such perturbations are hard to conduct in a manner that they still resemble the original network, and hence are difficult to use to calculate accurate statistics. In general, it is easier to understand null models that relate to user actions, than null models that relate to model parameters.
 
