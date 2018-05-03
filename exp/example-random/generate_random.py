@@ -8,17 +8,17 @@ genes = np.unique(original.index)
 random_signatures = pd.DataFrame()
 
 n_samples = 10000
-n_genes = 25
+n_genes = 10
 
 for i in np.arange(1,n_samples+1,1):
-    sample_genes = np.random.choice(genes, n_genes)
+    sample_genes = np.random.choice(genes, n_genes, replace=False)
     new_group = pd.DataFrame(np.transpose([sample_genes, np.repeat('group' + str(i), n_genes)]))
     random_signatures = random_signatures.append(new_group)
 
 random_signatures.columns = ['#Node', 'GroupName']
 
 
-random_signatures.set_index('#Node').to_csv('Random_Signatures_25.tsv', sep = '\t')
+random_signatures.set_index('#Node').to_csv('Random_Signatures.tsv', sep = '\t')
 
 
 #####
