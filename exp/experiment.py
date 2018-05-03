@@ -20,7 +20,7 @@ pathway_genes = pathways.where(pathways.pathway == pathway_name).dropna().gene.v
 
 k = genk.generate_k(pathway_genes)
 
-N = genesetdp.genesetdp(k,10)
+N = genesetdp.genesetdp(k,25)
 
 p_vals = (np.flipud(np.cumsum(np.flipud(N))) - N/2)/sum(N)
 
@@ -33,6 +33,7 @@ sns.set_style("ticks")
 sns.despine()
 
 plt.step(np.arange(len(N)), N, where='mid')
+plt.ylabel('$N(s)$')
 plt.xlabel('Score, $s$')
 
 plt.savefig('score_distribuition.png')

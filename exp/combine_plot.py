@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-binox = pd.read_csv('example-random//Pathway_One_vs_Random_Signatures.tsv', sep='\t')
+binox = pd.read_csv('example-random/BinoX_results.tsv', sep='\t')
 binox = binox.set_index('#3:NameGroupB')
 binox.index = [x.lower() for x in binox.index]
 
