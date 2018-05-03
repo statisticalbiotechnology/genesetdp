@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-original = pd.read_csv('Signatures.tsv', sep='\t')
+original = pd.read_csv('../../../binox/example/Signatures.tsv', sep='\t')
 
 genes = np.unique(original.index)
 
@@ -11,8 +11,7 @@ n_samples = 10000
 n_genes = 25
 
 for i in np.arange(1,n_samples+1,1):
-    sample = np.random.choice(len(genes),n_genes, replace=False)
-    sample_genes = genes[sample]
+    sample_genes = np.random.choice(genes, n_genes)
     new_group = pd.DataFrame(np.transpose([sample_genes, np.repeat('group' + str(i), n_genes)]))
     random_signatures = random_signatures.append(new_group)
 
