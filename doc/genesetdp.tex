@@ -19,6 +19,10 @@ Royal Institute of Technology -- KTH, Box 1031, 17121 Solna, Sweden\\ \texttt{lu
 
 \maketitle
 
+\begin{abstract}
+FIXME
+\end{abstract}
+
 \section*{Introduction}
 
 Gene enrichment analysis (GEA) is commonly used to infer function from sets of analytes such as genes, transcripts proteins or metabolites\cite{tavazoie1999systematic,khatri2012ten}. The technique estimates which functional modules, such as complexes or pathways, that are overrepresented among a set of identified analytes. One prominent application of the technique is expression analysis, where GEA is regularly used to assess alternation in pathway activity by examining significantly different concentrations of analytes between biological conditions, such as disease state or treatment group.
@@ -117,7 +121,7 @@ To illustrate the $p$~value calculation procedure we plotted the score distribut
 				\includegraphics[scale=0.8]{figures/F1_score_distribuition.png}
 		\end{center}
 %FIXME: Do not use figure numbers in their file name, this creates havoc if you want to reorganize them later
-  \caption{{\bf Score distribution of a query size of 25 genes against the Glycolysis/Gluconeogenesis pathway.} GeneSetDP enables us to calculate the full score distribution for a query of a given size, $Q$, i.e. how many ways one can reach a certain score when adding up the scores for $Q$ genes.}
+  \caption{{\bf Score distribution of a query size of 25 genes against the ``Glycolysis/Gluconeogenesis'' pathway.} GeneSetDP enables us to calculate the full score distribution for a query of a given size, $Q$, i.e. how many ways one can reach a certain score when adding up the scores for $Q$ genes.}
   \label{fig:score_dist}
 \end{figure}
 
@@ -125,7 +129,7 @@ To illustrate the $p$~value calculation procedure we plotted the score distribut
 
 In order to test the statistical calibration of our method, we calculated $p$~values for 10000 random picks of gene sets from the investigated genome. As our selection is random and following our null hypothesis, we expected the resulting $p$~values to be uniformly distributed. To test this we plotted the $p$~values against their quantile in Figure \ref{fig:calibration}. As a comparison, we also added a calibration curve for the popular NEA method BinoX\cite{ogris2016novel}.
 
-We note that the calibration of
+We note that the calibration of GeneSetDP is slightly conservative, i.e. the calculated $p$ values are larger than expected. Meanwhile, BinoX appears strongly anti-conservative, that is, the $p$ values are much lower than expected.
 
 \begin{figure}[htb]
 		\begin{center}
@@ -133,7 +137,7 @@ We note that the calibration of
 		\end{center}
 
 %\includegraphics{img/FIXME.png}
-  \caption{{\bf Calibration of GeneSetDP.} We selected 10000 random sets from the investigated genome definition and calculated their $p$ values with GeneSetDP against the Glycolysis/Gluconeogenesis pathway. To test the $p$~values uniformity we plotted them against their Normalized rank. We also added the calibration curve of BinoX, evaluated on the same random sets.}
+  \caption{{\bf Calibration of GeneSetDP.} We selected 10000 random sets from the investigated genome definition and calculated their $p$ values with GeneSetDP against the ``Glycolysis/Gluconeogenesis'' pathway. To test the $p$~values uniformity we plotted them against their Normalized rank. We also added the calibration curve of BinoX, evaluated on the same random sets.}
   \label{fig:calibration}
 \end{figure}
 
