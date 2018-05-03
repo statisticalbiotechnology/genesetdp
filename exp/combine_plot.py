@@ -5,7 +5,15 @@ import seaborn as sns
 
 
 binox = pd.read_csv('example-random/BinoX_results.tsv', sep='\t')
+
+###### only enriched
+binox.loc[binox['#6:relationType'] == '-', '#4:p.value'] = 1 - binox.loc[binox['#6:relationType'] == '-', '#4:p.value']
+######
+
+
+
 binox = binox.set_index('#3:NameGroupB')
+
 binox.index = [x.lower() for x in binox.index]
 
 binox = binox['#4:p.value']
