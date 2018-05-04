@@ -8,8 +8,15 @@ else:
     Q=25
 
 original = pd.read_csv('~/git/binox/example/Network.tsv', sep='\t')
+## manipulate network
+network_treshold = 0.7
+network_cut = original['#0:PFC'] >= network_treshold
+network_one = original.loc[network_cut]
+network = network_one.iloc[:,[0,1]].reset_index(drop=True)
+network.columns = ['gene1','gene2']
+network = network.set_index('gene1')
 
-genes = np.unique(original['#2:Gene1'])
+genes = np.unique(network.index)
 print("Num genes=",len(genes))
 
 random_signatures = pd.DataFrame()
