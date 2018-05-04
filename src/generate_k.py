@@ -20,9 +20,10 @@ network = network.set_index('gene1')
 n_genes = len(np.unique(network.index))
 
 def generate_k(pathway_genes):
-    links = network.loc[pathway_genes].dropna()
+    # links = network.loc[pathway_genes].dropna()
+    links = network.index[network.gene2.isin(pathway_genes)]
 
-    k_proto = links.gene2.value_counts().value_counts()
+    k_proto = links.value_counts().value_counts()
 
     k = k_proto.loc[list(range(max(k_proto.index)+1))]
     k[k.isna()] = 0
