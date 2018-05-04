@@ -20,6 +20,7 @@ binox = binox['#4:p.value']
 
 genesetdp = pd.read_csv('example-random/genesetDP_results.tsv', sep='\t', index_col=0)
 genesetdp_sorted = genesetdp['p'].sort_values()
+genesetdp_sorted_mc = genesetdp['p_mc'].sort_values()
 genesetdp_ix = (np.arange(len(genesetdp_sorted.index))+0.5)/float(len(genesetdp_sorted))
 
 binox = binox.loc[genesetdp.index]
@@ -37,11 +38,12 @@ sns.despine()
 
 plt.loglog(binox_ix, binox_sorted, '.')
 plt.loglog(genesetdp_ix, genesetdp_sorted,'.')
+plt.loglog(genesetdp_ix, genesetdp_sorted_mc,'.')
 plt.loglog(x_y, '--', color = 'r', alpha = 0.5)
 plt.loglog(x_2y, ':',color = 'b', alpha = 0.5)
 plt.loglog(x_halfy, ':',color = 'b', alpha = 0.5)
 
-plt.legend(['BinoX', 'GeneSetDP', 'y=x', 'y=0.5x,y=2x'])
+plt.legend(['BinoX', 'GeneSetDP', 'GeneSetDP, monte carlo', 'y=x', 'y=0.5x,y=2x'])
 plt.ylabel('$p$ value')
 plt.xlabel('Normalized rank')
 
