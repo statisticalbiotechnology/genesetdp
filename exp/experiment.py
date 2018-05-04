@@ -7,6 +7,8 @@ sys.path.insert(0, '../src')
 import generate_k as genk
 import genesetdp
 
+import genesetdp_monte_carlo as mc
+
 if len(sys.argv)>1:
     Q=int(sys.argv[1])
 else:
@@ -31,6 +33,8 @@ N = genesetdp.genesetdp(k,Q)
 assert(float(sum(N))==float(comb(sum(k),Q,exact=False)))
 
 p_vals = (np.flipud(np.cumsum(np.flipud(N))) - N/2)/sum(N)
+
+p_vals_mc = mc.genesetmc(k, Q, 100000)
 
 groups = pd.read_csv('example-random/Random_Signatures.tsv', sep='\t')
 
