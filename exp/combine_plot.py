@@ -20,12 +20,12 @@ binox = binox['#4:p.value']
 
 genesetdp = pd.read_csv('example-random/genesetDP_results.tsv', sep='\t', index_col=0)
 genesetdp_sorted = genesetdp['p'].sort_values()
-genesetdp_ix = (np.arange(len(genesetdp_sorted.index))+0.5)/float(len(genesetdp_sorted)+1)
+genesetdp_ix = (np.arange(len(genesetdp_sorted.index))+0.5)/float(len(genesetdp_sorted))
 
 binox = binox.loc[genesetdp.index]
 binox.loc[np.isnan(binox)] = 1
 binox_sorted = binox.sort_values()
-binox_ix = (np.arange(len(binox_sorted.index))+0.5)/float(len(binox_sorted.index)+1)
+binox_ix = (np.arange(len(binox_sorted.index))+0.5)/float(len(binox_sorted.index))
 
 x_y = pd.DataFrame(np.arange(0,1,0.001), index = np.arange(0,1,0.001))
 x_2y = pd.DataFrame(np.arange(0,1,0.001)*2, index = np.arange(0,1,0.001))

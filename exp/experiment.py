@@ -1,10 +1,16 @@
 import pandas as pd
 import numpy as np
+from scipy.special import comb
 
 import sys
 sys.path.insert(0, '../src')
 import generate_k as genk
 import genesetdp
+
+if len(sys.argv)>1:
+    Q=int(sys.argv[1])
+else:
+    Q=25
 
 ## example path
 path = "~/git/binox/example/"
@@ -20,7 +26,9 @@ pathway_genes = pathways.where(pathways.pathway == pathway_name).dropna().gene.v
 
 k = genk.generate_k(pathway_genes)
 
-N = genesetdp.genesetdp(k,25)
+N = genesetdp.genesetdp(k,Q)
+#assert(float(sum(N))==float(genesetdp.ncr(sum(k),Q)))
+assert(float(sum(N))==float(comb(sum(k),Q,exact=False)))
 
 p_vals = (np.flipud(np.cumsum(np.flipud(N))) - N/2)/sum(N)
 

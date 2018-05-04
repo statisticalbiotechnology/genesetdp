@@ -1,5 +1,11 @@
+import sys
 import pandas as pd
 import numpy as np
+
+if len(sys.argv)>1:
+    Q=int(sys.argv[1])
+else:
+    Q=25
 
 original = pd.read_csv('~/git/binox/example/Network.tsv', sep='\t')
 
@@ -8,7 +14,7 @@ genes = np.unique(original['#2:Gene1'])
 random_signatures = pd.DataFrame()
 
 n_samples = 10000
-n_genes = 25
+n_genes = Q
 
 for i in np.arange(1,n_samples+1,1):
     sample_genes = np.random.choice(genes, n_genes, replace=False)
