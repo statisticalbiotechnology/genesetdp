@@ -43,13 +43,14 @@ network = genk.network
 # linked_genes = network.loc[pathway_genes].dropna().gene2.values.tolist()
 linked_genes = network.index[network.gene2.isin(pathway_genes)].tolist()
 
-results = pd.DataFrame(columns = ['n','p'])
+results = pd.DataFrame(columns = ['n','p','p_mc'])
 ## start for
 for i in range(1,10001):
     groupname = 'group' + str(i)
     genes = groups.loc[groups.GroupName==groupname,'#Node']
     n = sum(linked_genes.count(x) for x in genes)
     p = p_vals[n]
-    results.loc[groupname] = [n,p]
+    p_mc = p_vals_mc[n]
+    results.loc[groupname] = [n,p, p_mc]
 
 results.to_csv('example-random/genesetDP_results.tsv', sep = '\t')
