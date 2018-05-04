@@ -20,7 +20,8 @@ Royal Institute of Technology -- KTH, Box 1031, 17121 Solna, Sweden\\ \texttt{lu
 \maketitle
 
 \begin{abstract}
-FIXME
+A prevailing technique to infer function from findings in high-throughput experiments is gene set enrichemnet analysis, where the sets of genes are compared to predefined sets of related genes, so called pathways. As some of such pathways are known to be incomplete, algoritmic efforts have been made to complement them with information from functional association networks, using so called Network Enrichment Analysis (NEA). Traditionally significance of inferences from NEA has been asssigned using network perturbations. Here we instead have designed a dynamic programming  algorithm that can calculte the score distribution of NEA scores and makes it possible to assign unbiased mid $p$~values to inferences. We demonstrate that our method obtains a superior statistical calibration as compared to the popular NEA inference engin, NEA.
+
 \end{abstract}
 
 \section*{Introduction}
@@ -29,13 +30,11 @@ Gene enrichment analysis (GEA) is commonly used to infer function from sets of a
 
 Most GEA methods are assessing the overlap between the investigated set of analytes, the {\em query set}, and a functional module, the {\em pathway set}, using hypergeometric test or a Fisher's exact test. However, variants such as Gene Set Enrichment Analysis (GSEA)\cite{subramanian2005gene} also includes information on expression levels of the analytes of the query set.
 
-A limiting factor of GEA is the pathway definition databases. While \url{http://pathguide.org} list 708 databases of pathway definitions\cite{bader2006pathguide},  some critique has been voiced concerning the completeness and rigor of current pathway databases. Hence efforts have been directed to designing methods that extend the pathway definitions, by functional association networks, like STRING\cite{szklarczyk2014string}. Instead of directly examining the overlap between the query and pathway sets, one can evaluate the number of links in the functional association network that connect the query and pathway set\cite{shojaie2010network, alexeyenko2012network, glaab2012enrichnet, mccormack2013statistical, ogris2016novel, signorelli2016neat}. This is known as Network Enrichment Analysis (NEA).
+A limiting factor of GEA is the pathway definition databases. While \url{http://pathguide.org} list 708 databases of pathway definitions\cite{bader2006pathguide},  some critique has been voiced concerning the completeness and rigor of current pathway databases. Hence efforts have been directed to designing methods that extend the pathway definitions, by functional association networks, like STRING\cite{szklarczyk2014string}. Instead of directly examining the overlap between the query and pathway sets, one can evaluate the number of links in the functional association network that connect the query and pathway set\cite{alexeyenko2012network, glaab2012enrichnet, mccormack2013statistical, ogris2016novel, signorelli2016neat}. This is known as Network Enrichment Analysis (NEA).
 
-FIXME: Review the mentioned methods. Particularly which null models do they use?
+The significance of the inferences from NEA are assessed by null models that investigate the number of expected random links from the query geneset to the pathway. Previous efforts have settled for varius parametric null distributions, where the parameters are estimated by Monte Carlo-simulations that permute the network definitions by methods with varying degrees of topological conservation.
 
-The quality of the inferences from NEA has previously been assessed by Monte Carlo-simulations that investigates the scores distribution when evaluating the query set using random networks which are generated using methods with varying degrees of topological conservation.
-
-Since these methods of network randomization are not completely random, they introduce bias in the statistics that may or may not be desirable, as the set of random networks is much larger than the ones of random networks that retain a certain topological characteristic. Also, the somewhat inaccessible process used to randomize networks produces statistics that are equaly hard to interpret as the null hypothesis becomes complex. FIXME: Should this be in the dicussion?
+Since such methods of network randomization are not completely random, they introduce bias in the statistics that may or may not be desirable, as the set of random networks is much larger than the ones of random networks that retain a certain topological characteristic. Also, the somewhat inaccessible process used to randomize networks produces statistics that are equaly hard to interpret as the null hypothesis becomes complex. FIXME: Should this be in the dicussion?
 
 Here, we present a dynamic programming algorithm, that we dubbed GeneSetDP, that calculates the score distribution of any query of a given size. The algorithm enables us to calculate well-defined statistics of inferences from NEA.  Using simulations we demonstrated that the algorithm produced unbiased statistics.
 
