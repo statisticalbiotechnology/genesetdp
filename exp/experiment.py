@@ -29,8 +29,7 @@ pathway_genes = pathways.where(pathways.pathway == pathway_name).dropna().gene.v
 k = genk.generate_k(pathway_genes)
 
 N = genesetdp.genesetdp(k,Q)
-#assert(float(sum(N))==float(genesetdp.ncr(sum(k),Q)))
-assert(float(sum(N))==float(comb(sum(k),Q,exact=False)))
+#assert(float(sum(N))==float(comb(sum(k),Q,exact=False)))
 
 p_vals = (np.flipud(np.cumsum(np.flipud(N))) - N/2)/sum(N)
 
@@ -40,7 +39,6 @@ groups = pd.read_csv('example-random/Random_Signatures.tsv', sep='\t')
 
 network = genk.network
 
-# linked_genes = network.loc[pathway_genes].dropna().gene2.values.tolist()
 linked_genes = network.index[network.gene2.isin(pathway_genes)].tolist()
 
 results = pd.DataFrame(columns = ['n','p','p_mc'])

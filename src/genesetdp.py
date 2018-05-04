@@ -32,8 +32,9 @@ if __name__ == "__main__":
     #k = np.array([3,3,3],dtype='u4')
     N=genesetdp(k,q)
     p_vals = (np.flipud(np.cumsum(np.flipud(N))) - N/2)/sum(N)
-    x,sk,ix=[],float(sum(k)),0
+    x,sk,ix,i2=[],float(sum(k)),0,0
     for ki in k:
+        y.insert
         for _ in range(ki):
             x.insert(0,(ix+0.5)/(sk))
             ix += 1

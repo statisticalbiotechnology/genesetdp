@@ -27,9 +27,10 @@ def generate_k(pathway_genes):
 
     k = k_proto.loc[list(range(max(k_proto.index)+1))]
     k[k.isna()] = 0
-    
+
     zero_link_genes = n_genes - sum(k)
     k = np.array(k[1:], dtype='u4')
     k = np.insert(k,0,zero_link_genes)
+    print("Here number of genes are ", n_genes)
 
     return k

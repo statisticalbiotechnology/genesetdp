@@ -10,6 +10,7 @@ else:
 original = pd.read_csv('~/git/binox/example/Network.tsv', sep='\t')
 
 genes = np.unique(original['#2:Gene1'])
+print("Num genes=",len(genes))
 
 random_signatures = pd.DataFrame()
 
