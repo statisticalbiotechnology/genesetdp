@@ -1,14 +1,14 @@
 import pandas as pd
 import numpy as np
 
-original = pd.read_csv('../../../binox/example/Signatures.tsv', sep='\t')
+original = pd.read_csv('~/git/binox/example/Signatures.tsv', sep='\t')
 
 genes = np.unique(original.index)
 
 random_signatures = pd.DataFrame()
 
 n_samples = 10000
-n_genes = 10
+n_genes = 25
 
 for i in np.arange(1,n_samples+1,1):
     sample_genes = np.random.choice(genes, n_genes, replace=False)
@@ -18,16 +18,15 @@ for i in np.arange(1,n_samples+1,1):
 random_signatures.columns = ['#Node', 'GroupName']
 
 
-random_signatures.set_index('#Node').to_csv('Random_Signatures.tsv', sep = '\t')
+random_signatures.set_index('#Node').to_csv('example-random/Random_Signatures.tsv', sep = '\t')
 
 
 #####
 
-pathways = pd.read_csv('Pathways.tsv', sep='\t', header=None)
+pathways = pd.read_csv('~/git/binox/example/Pathways.tsv', sep='\t', header=None)
 
 pathway_name = 'GLYCOLYSIS_/_GLUCONEOGENESIS_-_HOMO_SAPIENS_(HUMAN)'
 
 one_pathway = pathways.where(pathways.iloc[:,1] == pathway_name).dropna()
 
-one_pathway.to_csv('Pathway_One.tsv', sep='\t', header=None, index=False)
-
+one_pathway.to_csv('example-random/Pathway_One.tsv', sep='\t', header=None, index=False)

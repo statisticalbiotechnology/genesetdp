@@ -24,10 +24,10 @@ binox = binox.loc[genesetdp.index]
 binox.loc[np.isnan(binox)] = 1
 
 binox_sorted = binox.sort_values()
-binox_sorted.index = (np.arange(len(binox_sorted.index))+1)/len(binox_sorted.index)
+binox_ix = (np.arange(len(binox_sorted.index))+0.5)/float(len(binox_sorted.index)+1)
 
 genesetdp_sorted = genesetdp['p'].sort_values()
-genesetdp_sorted.index = (np.arange(len(genesetdp_sorted.index))+1)/len(genesetdp_sorted)
+genesetdp_ix = (np.arange(len(genesetdp_sorted.index))+0.5)/float(len(genesetdp_sorted)+1)
 
 
 x_y = pd.DataFrame(np.arange(0,1,0.001), index = np.arange(0,1,0.001))
@@ -38,8 +38,8 @@ sns.set_style("ticks")
 sns.despine()
 
 
-plt.loglog(binox_sorted, '.')
-plt.loglog(genesetdp_sorted, '.')
+plt.loglog(binox_ix, binox_sorted, '.')
+plt.loglog(genesetdp_ix, genesetdp_sorted,'.')
 plt.loglog(x_y, '--', color = 'r', alpha = 0.5)
 plt.loglog(x_2y, ':',color = 'b', alpha = 0.5)
 plt.loglog(x_halfy, ':',color = 'b', alpha = 0.5)

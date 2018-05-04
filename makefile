@@ -1,2 +1,3 @@
 all:
-	make -C doc
+	make -C exp
+	make -C doc 
