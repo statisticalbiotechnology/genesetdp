@@ -1,9 +1,9 @@
 import pandas as pd
 import numpy as np
 
-original = pd.read_csv('~/git/binox/example/Signatures.tsv', sep='\t')
+original = pd.read_csv('~/git/binox/example/Network.tsv', sep='\t')
 
-genes = np.unique(original.index)
+genes = np.unique(original['#2:Gene1'])
 
 random_signatures = pd.DataFrame()
 
