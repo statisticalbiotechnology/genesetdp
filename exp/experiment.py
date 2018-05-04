@@ -33,14 +33,15 @@ sns.set_style("ticks")
 sns.despine()
 
 plt.step(np.arange(len(N)), N, where='mid')
+plt.ylabel('$N(s)$')
 plt.xlabel('Score, $s$')
 
-plt.savefig('F1_score_distribuition.png')
+plt.savefig('score_distribuition.png')
 
 
 ####
 
-groups = pd.read_csv('../src/example-random/Random_Signatures.tsv', sep='\t')
+groups = pd.read_csv('../exp/example-random/Random_Signatures.tsv', sep='\t')
 
 network = genk.network
 

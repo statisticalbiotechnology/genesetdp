@@ -4,15 +4,21 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-genesetdp = pd.read_csv('genesetDP_results.tsv', sep='\t', index_col=0)
+binox = pd.read_csv('example-random/BinoX_results.tsv', sep='\t')
 
-binox = pd.read_csv('Pathway_One_vs_Random_Signatures.tsv', sep='\t')
+###### only enriched
+binox.loc[binox['#6:relationType'] == '-', '#4:p.value'] = 1 - binox.loc[binox['#6:relationType'] == '-', '#4:p.value']
+######
+
+
+
 binox = binox.set_index('#3:NameGroupB')
+
 binox.index = [x.lower() for x in binox.index]
 
-
 binox = binox['#4:p.value']
-genesetdp = pd.read_csv('genesetDP_results.tsv', sep='\t', index_col=0)
+
+genesetdp = pd.read_csv('example-random/genesetDP_results.tsv', sep='\t', index_col=0)
 
 binox = binox.loc[genesetdp.index]
 binox.loc[np.isnan(binox)] = 1
@@ -42,4 +48,4 @@ plt.legend(['BinoX', 'GeneSetDP', 'y=x', 'y=0.5x,y=2x'])
 plt.ylabel('$p$ value')
 plt.xlabel('Normalized rank')
 
-plt.savefig('F2_calibration.png')
+plt.savefig('calibration.png')
