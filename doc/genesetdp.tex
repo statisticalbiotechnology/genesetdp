@@ -58,11 +58,11 @@ A limiting factor of GEA is the pathway definition databases. While \url{http://
 
 The significance of the inferences from NEA is assessed by null models that investigate the number of expected random links from the query gene set to the pathway. Previous efforts have settled for various parametric null distributions, where the parameters are estimated by Monte Carlo-simulations that permute the network definitions by methods with varying degrees of topological conservation.
 
-As it is difficult to design network randomization techniques that are completely random, such methods often introduce an undesirable bias in the statistics. For instance, the actual set of random networks is much larger than the ones one use in such test, namely the random networks that retain a certain topological characteristic. Also, the somewhat inaccessible process used to randomize networks produces statistics that are equally hard to interpret, as such statistic in practice test a more complex null model than intended.
+As it is difficult to design network randomization techniques that are completely random, such methods often introduce an undesirable bias in the statistics. For instance, the actual set of random networks is much larger than the ones one use in such test, namely the random networks that retain a certain topological characteristic\cite{newman2001random}. Also, the somewhat inaccessible process used to randomize networks produces statistics that are equally hard to interpret, as such statistic in practice test a more complex null model than intended.
 
 Users of NEA typically want to test if there is a functional association between a query set of genes and a pathway\cite{alexeyenko2012network}. We argue that such test are much easier implemented as tests of the query set, i.e. is the query set a randomly selected set of genes, or is there an overrepresentation of well-connected genes in the query set?
 
-Hence, here we employ a null model of the form ``The query genes are randomly selected the genome``. We present a dynamic programming algorithm, that we dubbed GeneSetDP, that calculates the exact score distribution of any query of a given size. We also implemented one random sampling algoritm for the same task, that we called GeneSetMC.
+Hence, here we employ a null model of the form ``The query genes are randomly selected the genome``. We present a dynamic programming algorithm, that we dubbed GeneSetDP, that calculates the exact score distribution of any query of a given size. We also implemented one random sampling algorithm for the same task, that we called GeneSetMC.
 The algorithms enabled us to calculate well-defined statistics of inferences from NEA.  Using simulations we demonstrated that both the algorithms produced unbiased statistics.
 
 \section*{Algorithms}
@@ -170,7 +170,7 @@ To illustrate the $p$~value calculation procedure, we plotted the score distribu
 
 In order to test the statistical calibration of our method, we calculated $p$~values for 10000 random picks of gene sets from the investigated genome. As our selection is random and following our null hypothesis, we expected the resulting $p$~values to be uniformly distributed. To test this we plotted the $p$~values against their quantile in Figure \ref{fig:calibration} for $10000$ randomly assembled queries from the human genome. As a comparison, we also added a calibration curve for the popular NEA method BinoX\cite{ogris2016novel}.
 
-We note that the calibration of GeneSetDP is slightly conservative, i.e. the calculated $p$ values are larger than expected. Meanwhile, BinoX appears strongly anti-conservative, that is, the $p$ values are much lower than expected.
+We note that the calibration of GeneSetDP is slightly conservative, i.e. the calculated $p$ values are larger than expected. Meanwhile, BinoX appears strongly anti-conservative, that is, the $p$ values are lower than expected.
 
 \begin{figure}[htb]
   \begin{center}
@@ -188,7 +188,9 @@ We note that the calibration of GeneSetDP is slightly conservative, i.e. the cal
 
 \section*{Discussion}
 
-Here we have implemented two methods, GeneSetDP and GeneSetMC, to calculate unbiased $p$~values for inferences from NEA. We demonstrated that the method gave more accurate statistics than the popular BinoX method using random subsets of a genome.
+Here we have implemented two methods, GeneSetDP and GeneSetMC, to calculate unbiased $p$~values for inferences from NEA.
+Instead of testing our methods performance in terms of sensitivity, we here instead chose to test the method in terms of the methods statistical accuracy. We argue that more studies should make a point at demonstrate that their methods are well calibrated, as it is a prerequisite for measuring performance at least when ground truth of biological effect is not known.
+With this in mind, we demonstrated that our methods gave a better calibration than the popular BinoX method, by random sampling of subsets of a genome.
 
 Here we made an explicit definition of the null hypothesis we employed, which centers on the query, $H_0$ : ``The Q query genes are randomly selected from the genome''. Previous implementations of NEA in the literature otherwise use Monte Carlo-simulation to determine parameters for various types parametric distributions, by perturbations of the investigated network. In practice, such perturbations are hard to conduct in a manner that they still resemble the original network, and hence are difficult to use to calculate accurate statistics. In general, it is easier to understand null models that relate to user actions, than more complex null models that relate to model parameters.
 
