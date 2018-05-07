@@ -148,7 +148,7 @@ Source code of an implementation of GeneSetDP and GeneSetMC, as well as code for
 
 \section*{Results}
 
-We implemented a Python program that reads network and pathway definition files and scored query sets against a pathway according to Equation \ref{eq:sum_i}, using GeneSetDP and GeneSetMC described in the Algorithm section, that enabled us to assign $p$~values according to Equation \ref{eq:pval}. We downloaded pathway and network definitions from the BinoX's website and used the same network threshold as BinoX default ($0.7$).
+We implemented a Python program that reads network and pathway definition files and scores a query sets against a pathway according to Equation \ref{eq:sum_i}, using GeneSetDP and GeneSetMC described in the Algorithm section, that enabled us to assign $p$~values according to Equation \ref{eq:pval}. We downloaded pathway and network definitions from the BinoX's website and used the same network threshold as BinoX default ($0.7$).
 
 To illustrate the $p$~value calculation procedure, we plotted the score distributions $N(s)$ for a query size of 10, 20 and 30 genes in Figure \ref{fig:score_dist}, using GeneSetDP.
 
@@ -176,7 +176,7 @@ We note that the calibration of GeneSetDP is slightly conservative, i.e. the cal
       \includegraphics[width=1.0\textwidth]{figures/calibration_multiple.png}
 	  % \includegraphics{figures/calibration_legend.png}
   \end{center}
-  \caption{{\bf Calibration of GeneSetDP and GeneSetMC.} We selected 10000 random sets of 10, 20 and 30 genes from the investigated genome definition and calculated their $p$ values with GeneSetMC and GeneSetDP against the ``Glycolysis/Gluconeogenesis'' pathway. To test the $p$~values uniformity we plotted them against their normalized rank, i.e. each $p$~value's (<rank>-0.5)/<total number of $p$~values>). We also added the calibration curve of BinoX, evaluated on the same random sets. The dashed line shows $y = x$ and the dotted lines $y = 2x$ and $y = 0.5x$}
+  \caption{{\bf Calibration of GeneSetDP and GeneSetMC.} We selected 10000 random sets of 10, 20 and 30 genes from the investigated genome definition and calculated their $p$ values with GeneSetMC and GeneSetDP against the ``Glycolysis/Gluconeogenesis'' pathway. To test the $p$~values uniformity we plotted them against their {\em normalized rank}, i.e. each $p$~value's (<rank>-0.5)/<total number of $p$~values>). We also added the calibration curve of BinoX, evaluated on the same random sets. On all plots the dashed line shows $y = x$ and the dotted lines $y = 2x$ and $y = 0.5x$, for comparison}
   \label{fig:calibration}
 \end{figure}
 
