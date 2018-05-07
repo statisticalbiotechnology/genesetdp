@@ -31,8 +31,8 @@ sns.set_style("ticks")
 sns.despine()
 
 plt.step(np.arange(len(N)), N, where='mid')
-plt.ylabel('$N(s)$')
-plt.xlabel('Score, $s$')
+plt.ylabel('$N(s)$', fontsize=14)
+plt.xlabel('Score, $s$', fontsize=14)
 
 plt.savefig('score_distribuition_Q30.png')
 plt.show()
