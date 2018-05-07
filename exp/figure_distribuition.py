@@ -20,7 +20,7 @@ pathway_genes = pathways.where(pathways.pathway == pathway_name).dropna().gene.v
 
 k = genk.generate_k(pathway_genes)
 
-N = genesetdp.genesetdp(k,10)
+N = genesetdp.genesetdp(k,30)
 
 ####
 
@@ -33,7 +33,6 @@ sns.despine()
 plt.step(np.arange(len(N)), N, where='mid')
 plt.ylabel('$N(s)$')
 plt.xlabel('Score, $s$')
-plt.title('Q = 10')
 
-plt.savefig('score_distribuition_Q10.png')
+plt.savefig('score_distribuition_Q30.png')
 plt.show()
