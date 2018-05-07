@@ -62,7 +62,7 @@ As it is difficult to design network randomization techniques that are completel
 
 Users of NEA typically want to test if there is a functional association between a query set of genes and a pathway\cite{alexeyenko2012network}. We argue that such test are much easier implemented as tests of the query set, i.e. is the query set a randomly selected set of genes, or is there an overrepresentation of well-connected genes in the query set?
 
-Hence, here we employ a null model of the form ``The query genes are randomly selected the genome``. We present a dynamic programming algorithm, that we dubbed GeneSetDP, that calculates the exact score distribution of any query of a given size. We also implemented one random sampling algorithm for the same task, that we called GeneSetMC.
+Hence, here we employ a different null model, more directly aimed at model lack of association between query and pathway gene sets, which we formulate as ``The query genes are randomly selected the genome''. We present a dynamic programming algorithm, that we dubbed GeneSetDP, that calculates the exact score distribution of any query of a given size. We also implemented one random sampling algorithm for the same task, that we called GeneSetMC.
 The algorithms enabled us to calculate well-defined statistics of inferences from NEA.  Using simulations we demonstrated that both the algorithms produced unbiased statistics.
 
 \section*{Algorithms}
