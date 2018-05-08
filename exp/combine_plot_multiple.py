@@ -41,10 +41,11 @@ def one_plot(ax, Q):
     sns.set_style("ticks")
     sns.despine()
 
-    ax.loglog(binox_ix, binox_both_sorted, '.')
-    ax.loglog(binox_ix, binox_enrich_sorted, '.')
     ax.loglog(genesetdp_ix, genesetdp_sorted,'.')
     ax.loglog(genesetdp_ix, genesetdp_sorted_mc,'.')
+    ax.loglog(binox_ix, binox_both_sorted, '.')
+    ax.loglog(binox_ix, binox_enrich_sorted, '.')
+
     ax.loglog(x_y, '--', color = 'r', alpha = 0.5)
     ax.loglog(x_2y, ':',color = 'b', alpha = 0.5)
     ax.loglog(x_halfy, ':',color = 'b', alpha = 0.5)
@@ -56,22 +57,27 @@ one_plot(ax1, 10)
 one_plot(ax2, 20)
 one_plot(ax3, 30)
 
-ax1.set_title('Q = 10')
-ax2.set_title('Q = 30')
-ax3.set_title('Q = 30')
+ax1.set_title('Q = 10', fontsize=18)
+ax2.set_title('Q = 30', fontsize=18)
+ax3.set_title('Q = 30', fontsize=18)
 
-ax1.set(ylabel='$p$ value', xlabel = 'Normalized rank')
-ax2.set(xlabel = 'Normalized rank')
-ax3.set(xlabel = 'Normalized rank')
+ax1.set_ylabel('$p$ value', fontsize = 16)
+ax1.set_xlabel('Normalized rank', fontsize = 16)
+ax2.set_xlabel('Normalized rank', fontsize = 16)
+ax3.set_xlabel('Normalized rank', fontsize = 16)
 
-# for ax in [ax1,ax2,ax3]:
-#     ax.set_aspect('equal')
+for ax in [ax1,ax2,ax3]:
+    ax.xaxis.set_tick_params(labelsize=12)
+    ax.yaxis.set_tick_params(labelsize=12)
 
-lgd = fig.legend(['BinoX', 'BinoX (enriched)     ', 'GeneSetDP', 'GeneSetMC', 'y=x', 'y=0.5x,y=2x'], loc='center left', bbox_to_anchor=(0.85,0.5))
+# lgd = fig.legend(['GeneSetDP', 'GeneSetMC', 'BinoX', 'BinoX (enriched)'], loc='center left', bbox_to_anchor=(0.85,0.5))
+# fig.legend(['GeneSetDP', 'GeneSetMC', 'BinoX', 'BinoX (enriched)'], fontsize=15)
 
-fig.set_size_inches(10,3)
-fig.savefig('calibration_multiple.png', bbox_extra_artists=(lgd,), bbox_inches='tight')
 
+fig.set_size_inches(15,4)
+# fig.savefig('calibration_multiple.png', bbox_extra_artists=(lgd,), bbox_inches='tight')
+fig.savefig('calibration_multiple.png', bbox_inches='tight')
+plt.show()
 
 # plt.savefig('calibration_multiple.png')
 # plt.show()

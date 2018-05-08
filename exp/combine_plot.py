@@ -50,8 +50,11 @@ plt.loglog(x_y, '--', color = 'r', alpha = 0.5)
 plt.loglog(x_2y, ':',color = 'b', alpha = 0.5)
 plt.loglog(x_halfy, ':',color = 'b', alpha = 0.5)
 
+plt.legend(['BinoX', 'BinoX (enrichment)' 'GeneSetDP', 'GeneSetMC', 'y=x', 'y=0.5x,y=2x'])
 plt.ylabel('$p$ value')
 plt.xlabel('Normalized rank')
+
+
 
 plt.savefig('calibration_Q' + str(Q) + '.png')
 plt.show()
