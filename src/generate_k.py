@@ -10,16 +10,17 @@ network_file = 'Network.tsv'
 network_proto = pd.read_csv(path + network_file, sep='\t')
 
 ## manipulate network
-network_treshold = 0.7
-network_cut = network_proto['#0:PFC'] >= network_treshold
-network_one = network_proto.loc[network_cut]
-network = network_one.iloc[:,[0,1]].reset_index(drop=True)
-network.columns = ['gene1','gene2']
-network = network.set_index('gene1')
 
 n_genes = len(np.unique(network_proto['#2:Gene1']))
 
-def generate_k(pathway_genes):
+def generate_k(pathway_genes, network_treshold = 0.7):
+    network_cut = network_proto['#0:PFC'] >= network_treshold
+    network_one = network_proto.loc[network_cut]
+    network = network_one.iloc[:,[0,1]].reset_index(drop=True)
+    network.columns = ['gene1','gene2']
+    network = network.set_index('gene1')
+
+
     # links = network.loc[pathway_genes].dropna()
     links = network.index[network.gene2.isin(pathway_genes)]
 

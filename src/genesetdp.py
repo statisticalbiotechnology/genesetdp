@@ -25,6 +25,10 @@ def genesetdp(k,q):
                         N[s,c] += comb(k[a], b, exact=False) * N[s-a*b,c-b]
     return N[:,q]
 
+def calculate_p(N):
+    p_vals = (np.flipud(np.cumsum(np.flipud(N))) - N/2)/sum(N)
+    return p_vals
+
 if __name__ == "__main__":
     # Query size q, number of links k[a]
     q = 2
