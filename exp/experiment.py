@@ -7,7 +7,7 @@ sys.path.insert(0, '../src')
 import generate_k as genk
 import genesetdp
 
-import genesetdp_monte_carlo as mc
+import genesetmc as mc
 
 if len(sys.argv)>1:
     Q=int(sys.argv[1])
