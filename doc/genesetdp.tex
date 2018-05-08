@@ -67,14 +67,14 @@ The algorithms enabled us to calculate well-defined statistics of inferences fro
 
 \section*{Algorithms}
 
-In network-based gene set analysis one score a query set of genes, $ \mathcal{Q}=\{g_1 \ldots g_Q\}$, from a genome with genes, $\mathcal{G}=\{g_1 \ldots g_G\}$ ($Q \le G$), and how they relate to a pathway $\{p_1 \ldots p_P\}$. In NEA the pathway maps to the genome through a network, ${x_{ij}}$, where $x_{ij}=1$ if $g_i$ and $p_j$ are connected, or $x_{ij}=0$ otherwise. The pathways are scored by summing up all connections, i.e. the pathway score can be expressed as,
+In network-based gene set analysis one score a query set of genes, $ \mathcal{Q}=\{g_1 \ldots g_Q\}$, from a genome with genes, $\mathcal{G}=\{g_1 \ldots g_G\}$ ($Q \le G$), and how they relate to a pathway, $\mathcal{P}=\{p_1 \ldots p_P\}$. In NEA the pathway maps to the genome through a network, ${x_{ij}}$, where $x_{ij}=1$ if $g_i$ and $p_j$ are connected, or $x_{ij}=0$ otherwise. The pathways are scored by summing up all connections, i.e. the pathway score can be expressed as,
 
 \begin{equation}
 s=\sum_{i=1}^Q\sum_{j=1}^P x_{ij}.
 \label{eq:sum_ij}
 \end{equation}
 
-We wanted to evaluate our score under the null hypothesis, $H_0$ : ``There are not more links between the query and pathway gene sets than expected by chance''. This  formulation translates to calculating the distribution of scores that would occurs if the $Q$ query genes are randomly selected from the genome, and see how frequently a score as extreme or more extreme than the current score would appear in that distribution. Hence, we wanted to determine a score distribution, {\em i.e.} the number of ways, $N(s)$, we can pick $Q$ genes and obtaining a score, $s$, which we will give two methods for below. Given such a score distribution, we can express a mid $p$~value\cite{lancaster1961significance,hwang2001optimality} for obtaining a score, $s$, as,
+We wanted to evaluate our score under the null hypothesis, $H_0$ : ``There are not more links between the query and pathway gene sets than expected by chance''. This  formulation translates to calculating the distribution of scores that would occur if the $Q$ query genes are randomly selected from the genome, and see how frequently a score as extreme or more extreme than the current score would appear in that distribution. Hence, we wanted to determine a score distribution, {\em i.e.} the number of ways, $N(s)$, we can pick $Q$ genes and obtaining a score, $s$, which we will give two methods for below. Given such a score distribution, we can express a mid $p$~value\cite{lancaster1961significance,hwang2001optimality} for obtaining a score, $s$, as,
 
 \begin{equation}
 p(s)=\frac{N(s)/2 +\sum_{s'=s+1}^{S} N(s')}{\sum_{s'=0}^{S} N(s')},
@@ -87,7 +87,7 @@ We can reformulate Equation \ref{eq:sum_ij} by defining the number-of-links, $l_
 s=\sum_{i=1}^Q l_i.
 \label{eq:sum_i}
 \end{equation}
-Such number-of-links, $l_i$, can be pre-computed for all genes $i, \ldots, G$.
+Such number-of-links, $l_i$, can be pre-computed for all genes in $\mathcal{G}$.
 
 \subsection*{Random sampling algorithm}
 
@@ -95,13 +95,11 @@ We first implemented a random sampling algorithm to assess $N(s)$. We randomly s
 
 \subsection*{Computation of the score distribution}
 
-Furthermore, the number of genes having $a$ links to the investigated pathway is given by $k_a=\sum_{\{i:l_i=a\}}1$, and $R=\max_{i}{l_i}$.
-
-In our strive to calculate the score distribution, $N(s)$, we first want to investigate the number of ways, $N_a(s,c)$, to obtain a score $s$, when summing up links for $c$ genes with up to $\le a$ links to the pathway. This helps us formulate the recursion, using the fact that there are $k_a \choose b$ ways to select $b$ from $k_a$ elements, as
+We also realized that one could calculate the full score distribution, $N(s)$, using dynamic programming. First, we define a function, $k_a=\sum_{\{i:l_i=a\}}1$, giving the number of genes having $a$ links to the investigated pathway, and we define $R=\max_{i}{l_i}$. Furthermore, we define the number of ways, $N_a(s,c)$, to obtain a score $s$, when summing up links for $c$ genes with up to $\le a$ links to the pathway. This helps us formulate the recursion, using the fact that there are $k_a \choose b$ ways to select $b$ from $k_a$ elements, as
 \begin{equation}
 N_a(s,c)=\sum_{b=0}^{k_a}{k_a \choose b} N_{a-1}(s-ab,c-b),
 \end{equation}
-where $N_a(s,c)=0$ for all $s<0$, $c<0$ or $a<0$, with the exception for $N_{-1}(0,0)=1$.
+where $N_a(s,c)=0$ for all $s<0$, $c<0$ or $a<0$, with the exception of $N_{-1}(0,0)=1$.
 
 The final score distribution is given by $N(s)=N_R(s,Q)$.
 
@@ -131,12 +129,11 @@ N_a(s,c)=\sum_{b=1}^{k_a}{k_a \choose b} N_{a-1}(s-ab,c-b) + N_{a-1}(s,c)=D_a+N_
 \]
 
 
-This enables us to calculate $N$ in-place, at least as long as we update the elements in $N_a$ in a reverse order so that we do not alter elements from $N_{a-1}$ still needed to update subsequent elements. That is, we do not have to copy the dynamic programming matrix in each iteration over $a$, instead, we can add a $D_a$ on to of previous iterations $N_{a-1}(s,c)$, by nested updates over $s \in \{ S, S-1, \ldots, 0 \}$ and $c \in \{ Q, Q-1, \ldots, 0 \}$. For details see Listing \ref{lst:gensetdp}. We refer to this method as GeneSetDP.
+This enables us to calculate $N$ in-place, at least as long as we update the elements in $N_a$ in a reverse order so that we do not alter elements from $N_{a-1}$ still needed to update subsequent elements. That is, we do not have to copy the dynamic programming matrix in each iteration over $a$, instead, we can add a $D_a$ to previous iterations $N_{a-1}(s,c)$, by nested updates over $s \in \{ S, S-1, \ldots, 0 \}$ and $c \in \{ Q, Q-1, \ldots, 0 \}$. For details see Listing \ref{lst:gensetdp}. We refer to this method as GeneSetDP.
 
 \section*{Methods}
 
 We downloaded network definitions and the BinoX software (on 2018-04-28) for comparisons from \url{https://bitbucket.org/sonnhammergroup/binox}. BinoX was run with the default parameters.
-% FIXME: add a more detailed description of the test set (i.e. organism and number of genes, pathways and network connections).
 
 We also downloaded the NEA example given at the BinoX web site. The example files include a pathway definition file that groups $6819$ genes into $289$ human pathways and a network definition file that, after thresholding the links with a score of $0.7$, gave $1244992$ links between those genes.
 
@@ -181,10 +178,10 @@ We note that the calibration of GeneSetDP is slightly conservative, i.e. the cal
 \section*{Discussion}
 
 Here we have implemented two methods, GeneSetDP and GeneSetMC, to calculate unbiased $p$~values for inferences from NEA.
-Instead of testing our methods performance in terms of sensitivity, we here instead chose to test the method in terms of the methods statistical accuracy. We argue that more studies should make a point at demonstrate that their methods are well calibrated, as it is a prerequisite for measuring performance at least when ground truth of biological effect is not known.
-With this in mind, we demonstrated that our methods gave a better calibration than the popular BinoX method, by random sampling of subsets of a genome.
+Instead of testing our methods' performance in terms of sensitivity, we here instead chose to test the method in terms of the methods statistical accuracy. We argue that more studies should make a point at demonstrating that their methods are well-calibrated, as it is a prerequisite for measuring performance at least when the ground truth of biological effect is not known.
+With this in mind, we demonstrated that both our methods gave a better calibration than the popular BinoX method, by random sampling of subsets of a genome.
 
-Both our implementations, GeneSetDP and GeneSetMC, are intended for measuring enrichment of links between the query and the pathway set of genes. Most other NEA methods also report depletion of such links. One could easily modify our code to, instead of only measuring the higher scoring tail, measuring both tails of $N(s)$. However, this might result in a drop in sensitivity, so we have so far not implemented such a mechanism.
+Both our implementations, GeneSetDP and GeneSetMC, are intended for measuring the enrichment of links between the query and the pathway set of genes. Most other NEA methods also report depletion of such links. One could easily modify our code to, instead of only measuring the higher scoring tail, measuring both tails of $N(s)$. However, this might result in a drop in sensitivity, so we have so far not implemented such a mechanism.
 
 We made an explicit definition of the null hypothesis we employed, which centers on the query, $H_0$ : ``There are not more links between the query and pathway gene sets than expected by chance''. Previous implementations of NEA in the literature use Monte Carlo-simulation to determine parameters for various types parametric distributions, by perturbations of the investigated network. In practice, such perturbations are hard to conduct in a manner that they still resemble the original network, and hence are difficult to use to calculate accurate statistics. In general, it is easier to understand null models that relate to user actions, than more complex null models that relate to model parameters.
 
