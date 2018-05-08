@@ -43,7 +43,7 @@ def one_plot(ax, Q):
 
     ax.loglog(genesetdp_ix, genesetdp_sorted,'.')
     ax.loglog(genesetdp_ix, genesetdp_sorted_mc,'.')
-    ax.loglog(binox_ix, binox_both_sorted, '.')
+    # ax.loglog(binox_ix, binox_both_sorted, '.')
     ax.loglog(binox_ix, binox_enrich_sorted, '.')
 
     ax.loglog(x_y, '--', color = 'r', alpha = 0.5)
@@ -70,14 +70,14 @@ for ax in [ax1,ax2,ax3]:
     ax.xaxis.set_tick_params(labelsize=12)
     ax.yaxis.set_tick_params(labelsize=12)
 
-# lgd = fig.legend(['GeneSetDP', 'GeneSetMC', 'BinoX', 'BinoX (enriched)'], loc='center left', bbox_to_anchor=(0.85,0.5))
-# fig.legend(['GeneSetDP', 'GeneSetMC', 'BinoX', 'BinoX (enriched)'], fontsize=15)
+lgd = fig.legend(['GeneSetDP', 'GeneSetMC', 'BinoX'], loc='center', ncol =3, bbox_to_anchor=(0.5,0), fontsize=16)
+# fig.legend(['GeneSetDP', 'GeneSetMC', 'BinoX'], fontsize=15, ncol=3)
 
 
 fig.set_size_inches(15,4)
-# fig.savefig('calibration_multiple.png', bbox_extra_artists=(lgd,), bbox_inches='tight')
-fig.savefig('calibration_multiple.png', bbox_inches='tight')
-plt.show()
+fig.savefig('calibration_multiple.png', bbox_extra_artists=(lgd,), bbox_inches='tight')
+# fig.savefig('calibration_multiple.png', bbox_inches='tight')
+# plt.show()
 
 # plt.savefig('calibration_multiple.png')
 # plt.show()
