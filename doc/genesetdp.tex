@@ -62,7 +62,7 @@ As it is difficult to design network randomization techniques that are completel
 
 Users of NEA typically want to test if there is a functional association between a query set of genes and a pathway\cite{alexeyenko2012network}. We argue that such test are much easier implemented as tests of the query set, i.e. is the query set a randomly selected set of genes, or is there an overrepresentation of well-connected genes in the query set?
 
-Hence, here we employ a different null model, more directly aimed at model lack of association between query and pathway gene sets, which we formulate as ``The query genes are randomly selected the genome''. We present a dynamic programming algorithm, that we dubbed GeneSetDP, that calculates the exact score distribution of any query of a given size. We also implemented one random sampling algorithm for the same task, that we called GeneSetMC.
+Hence, here we employ a different null model, more directly aimed at model lack of association between query and pathway gene sets, which we formulate as ``there are not more links between the query and pathway gene sets than expected by chance''. We present a dynamic programming algorithm, that we dubbed GeneSetDP, that calculates the exact score distribution of any query of a given size. We also implemented one random sampling algorithm for the same task, that we called GeneSetMC.
 The algorithms enabled us to calculate well-defined statistics of inferences from NEA.  Using simulations we demonstrated that both the algorithms produced unbiased statistics.
 
 \section*{Algorithms}
@@ -74,7 +74,7 @@ s=\sum_{i=1}^Q\sum_{j=1}^P x_{ij}.
 \label{eq:sum_ij}
 \end{equation}
 
-Here, we wanted to determine a score distribution, {\em i.e.} the number of ways, $N(s)$, we can pick $Q$ genes and obtaining a score, $s$. This allows us to evaluate our score against the null hypothesis, $H_0$ : ``The Q query genes are randomly selected from the genome''. This can be expressed as a mid $p$~value\cite{lancaster1961significance,hwang2001optimality} for obtaining a score $s$,
+Here, we wanted to determine a score distribution, {\em i.e.} the number of ways, $N(s)$, we can pick $Q$ genes and obtaining a score, $s$. This allows us to evaluate our score against the null hypothesis, $H_0$ : ``There are not more links between the query and pathway gene sets than expected by chance''. This translates to evaluate yje distribution of scores that would occure if the $Q$ query genes are randomly selected from the genome''. This can be expressed as a mid $p$~value\cite{lancaster1961significance,hwang2001optimality} for obtaining a score $s$,
 
 \begin{equation}
 p(s)=\frac{N(s)/2 +\sum_{s'=s+1}^{S} N(s')}{\sum_{s'=0}^{S} N(s')},
@@ -189,7 +189,7 @@ With this in mind, we demonstrated that our methods gave a better calibration th
 
 Both our implementations, GeneSetDP and GeneSetMC, are intended for measuring enrichment of links between the query and the pathway set of genes. Most other NEA methods also report depletion of such links. One could easily modify our code to instead of only measuring the higher scoring tail measuring both tails of $N(s)$. However, this might result in a drop in sensitivity, so we have so far no implemented such a mechanism.
 
-Here we made an explicit definition of the null hypothesis we employed, which centers on the query, $H_0$ : ``The Q query genes are randomly selected from the genome''. Previous implementations of NEA in the literature use Monte Carlo-simulation to determine parameters for various types parametric distributions, by perturbations of the investigated network. In practice, such perturbations are hard to conduct in a manner that they still resemble the original network, and hence are difficult to use to calculate accurate statistics. In general, it is easier to understand null models that relate to user actions, than more complex null models that relate to model parameters.
+Here we made an explicit definition of the null hypothesis we employed, which centers on the query, $H_0$ : ``There are not more links between the query and pathway gene sets than expected by chance''. Previous implementations of NEA in the literature use Monte Carlo-simulation to determine parameters for various types parametric distributions, by perturbations of the investigated network. In practice, such perturbations are hard to conduct in a manner that they still resemble the original network, and hence are difficult to use to calculate accurate statistics. In general, it is easier to understand null models that relate to user actions, than more complex null models that relate to model parameters.
 
 \bibliography{./refs}
 
