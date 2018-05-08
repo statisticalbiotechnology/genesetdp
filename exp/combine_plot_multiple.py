@@ -58,7 +58,7 @@ one_plot(ax2, 20)
 one_plot(ax3, 30)
 
 ax1.set_title('Q = 10', fontsize=18)
-ax2.set_title('Q = 30', fontsize=18)
+ax2.set_title('Q = 20', fontsize=18)
 ax3.set_title('Q = 30', fontsize=18)
 
 ax1.set_ylabel('$p$ value', fontsize = 16)
@@ -70,13 +70,13 @@ for ax in [ax1,ax2,ax3]:
     ax.xaxis.set_tick_params(labelsize=12)
     ax.yaxis.set_tick_params(labelsize=12)
 
-lgd = fig.legend(['GeneSetDP', 'GeneSetMC', 'BinoX'], loc='center', ncol =3, bbox_to_anchor=(0.5,0), fontsize=16)
+# lgd = fig.legend(['GeneSetDP', 'GeneSetMC', 'BinoX'], loc='center', ncol =3, bbox_to_anchor=(0.5,0), fontsize=16)
 # fig.legend(['GeneSetDP', 'GeneSetMC', 'BinoX'], fontsize=15, ncol=3)
 
 
 fig.set_size_inches(15,4)
-fig.savefig('calibration_multiple.png', bbox_extra_artists=(lgd,), bbox_inches='tight')
-# fig.savefig('calibration_multiple.png', bbox_inches='tight')
+# fig.savefig('calibration_multiple.png', bbox_extra_artists=(lgd,), bbox_inches='tight')
+fig.savefig('calibration_multiple.png', bbox_inches='tight')
 # plt.show()
 
 # plt.savefig('calibration_multiple.png')
