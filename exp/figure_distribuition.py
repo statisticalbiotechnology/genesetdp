@@ -39,9 +39,9 @@ ax2.set_ylabel('$N(s)$', fontsize=16)
 ax3.set_ylabel('$N(s)$', fontsize=16)
 ax3.set_xlabel('Score, $s$', fontsize=16)
 
-ax1.set_title('                       $Q=10$', fontsize=14, horizontalalignment='left')
-ax2.set_title('                       $Q=20$', fontsize=14, horizontalalignment='left')
-ax3.set_title('                       $Q=30$', fontsize=14, horizontalalignment='left')
+ax1.set_title('                                 $Q=10$', fontsize=14, horizontalalignment='left')
+ax2.set_title('                                 $Q=20$', fontsize=14, horizontalalignment='left')
+ax3.set_title('                                 $Q=30$', fontsize=14, horizontalalignment='left')
 
 for ax in [ax1,ax2,ax3]:
     ax.xaxis.set_tick_params(labelsize=12)
