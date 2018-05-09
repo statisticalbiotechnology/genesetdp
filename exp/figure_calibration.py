@@ -70,14 +70,11 @@ for ax in [ax1,ax2,ax3]:
     ax.xaxis.set_tick_params(labelsize=12)
     ax.yaxis.set_tick_params(labelsize=12)
 
-# lgd = fig.legend(['GeneSetDP', 'GeneSetMC', 'BinoX'], loc='center', ncol =3, bbox_to_anchor=(0.5,0), fontsize=16)
+lgd = fig.legend(['GeneSetDP', 'GeneSetMC', 'BinoX'], loc='center', ncol =3, bbox_to_anchor=(0.5,0), fontsize=16)
 # fig.legend(['GeneSetDP', 'GeneSetMC', 'BinoX'], fontsize=15, ncol=3)
 
 
-fig.set_size_inches(15,4)
-# fig.savefig('calibration_multiple.png', bbox_extra_artists=(lgd,), bbox_inches='tight')
+# fig.set_size_inches(15,4)
 fig.savefig('calibration_multiple.png', bbox_inches='tight')
 # plt.show()
 
-# plt.savefig('calibration_multiple.png')
-# plt.show()

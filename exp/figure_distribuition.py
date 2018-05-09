@@ -56,8 +56,8 @@ ax3.step(np.arange(len(N30)), N30, where='mid')
 ax3.plot(len(N30),1, '.', color='r', markersize=12)
 
 plt.tight_layout()
-# plt.savefig('score_distribuition_multiple.png')
-plt.show()
+plt.savefig('score_distribuition_multiple.png')
+# plt.show()
 
 
 
