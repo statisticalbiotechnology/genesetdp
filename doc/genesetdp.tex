@@ -67,7 +67,7 @@ The algorithms enabled us to calculate well-defined statistics of inferences fro
 
 \section*{Algorithms}
 
-In network-based gene set analysis one score a query set of genes, $ \mathcal{Q}=\{g_1 \ldots g_Q\}$, from a genome with genes, $\mathcal{G}=\{g_1 \ldots g_G\}$ ($Q \le G$), and how they relate to a pathway, $\mathcal{P}=\{p_1 \ldots p_P\}$. In NEA the pathway maps to the genome through a network, ${x_{ij}}$, where $x_{ij}=1$ if $g_i$ and $p_j$ are connected, or $x_{ij}=0$ otherwise. The pathways are scored by summing up all connections, i.e. the pathway score can be expressed as,
+In network-based gene set analysis one score a query set of genes, $ \mathcal{Q}=\{g_1 \ldots g_Q\}$, from a genome with genes, $\mathcal{G}=\{g_1 \ldots g_G\}$ (i.e. $\mathcal{Q} \subseteq \mathcal{G}$), and how they relate to a pathway, $\mathcal{P}=\{p_1 \ldots p_P\}$. In NEA the pathway maps to the genome through a network, ${x_{ij}}$, where $x_{ij}=1$ if $g_i$ and $p_j$ are connected, or $x_{ij}=0$ otherwise. The pathways are scored by summing up all connections, i.e. the pathway score can be expressed as,
 
 \begin{equation}
 s=\sum_{i=1}^Q\sum_{j=1}^P x_{ij}.
