@@ -30,18 +30,52 @@ def calculate_p(N):
     return p_vals
 
 if __name__ == "__main__":
-    # Query size q, number of links k[a]
-    q = 2
-    k = np.array([4,2,1,1],dtype='u4')
-    #k = np.array([3,3,3],dtype='u4')
-    N=genesetdp(k,q)
-    p_vals = (np.flipud(np.cumsum(np.flipud(N))) - N/2)/sum(N)
-    x,sk,ix,i2=[],float(sum(k)),0,0
-    for ki in k:
-        y.insert
-        for _ in range(ki):
-            x.insert(0,(ix+0.5)/(sk))
-            ix += 1
-    print(N)
-    print(p_vals)
-    print(x)
+    import argparse
+    import sys
+    import pandas as pd
+
+    parser = argparse.ArgumentParser(description='Calculates statistics for network enrichment of pathways.')
+    parser.add_argument('networkfile', type=argparse.FileType('r'),
+        help='Filename of Network file')
+    parser.add_argument('pathwayfile', type=argparse.FileType('r'),
+        help='Filename of Pathway file')
+    parser.add_argument('querygenesfile', nargs='?', type=argparse.FileType('r'), default=sys.stdin,help='Filename of File with query genes. If omitted the gene names will be read from STDIN')
+    parser.add_argument('-s','--singlepathway', metavar='PATHWAY',default='',help='The examined pathway. If omitted, all pathways in the pathway file will be tested.')
+
+    args = parser.parse_args()
+
+    qurey = pd.read_csv(args.querygenesfile, sep='\t', header=None)
+    query.columns = ['gene']
+    q = df.shape[0]
+
+    pathways = pd.read_csv(args.pathwayfile, sep='\t', header=None)
+    pathways.columns = ['gene','pathway']
+
+    network_proto = pd.read_csv(networkfile, sep='\t')
+    n_genes = len(np.unique(network_proto['#2:Gene1']))
+    network_cut = network_proto['#0:PFC'] >= network_treshold
+    network_one = network_proto.loc[network_cut]
+    network = network_one.iloc[:,[0,1]].reset_index(drop=True)
+    network.columns = ['gene1','gene2']
+    network = network.set_index('gene1')
+
+    ps = {}
+
+    if args.singlepathway:
+        examinedpathways = [args.singlepathway]
+    else:
+        examinedpathways = np.unique(pathways['pathway'])
+
+    for pathway_name in examinedpathways:
+        pathway_genes = pathways.where(pathways.pathway == pathway_name).dropna().gene.values
+        k = genk.generate_k(pathway_genes,network,n_genes)
+        linked_genes = network.index[network.gene2.isin(pathway_genes)].tolist()
+        s = sum(linked_genes.count(x) for x in q['gene'])
+
+        N = genesetdp.genesetdp(k,10)
+        p_vals = (np.flipud(np.cumsum(np.flipud(N))) - N/2)/sum(N)
+        p = p_vals[s]
+        ps.append((pathway_name,p))
+
+    for pathway_name,p in ps:
+        print("{}\t{}".format(pathway_name,p))
