@@ -47,7 +47,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     query = pd.read_csv(args.querygenesfile, sep='\t', header=None)
-    query.rename(columns ={0: ‘gene’}, inplace =True)
+    query.rename(columns ={0: 'gene'}, inplace =True)
     q = query.shape[0]
 
     pathways = pd.read_csv(args.pathwayfile, sep='\t', header=None)
