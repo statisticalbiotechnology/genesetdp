@@ -1,7 +1,9 @@
 \documentclass[a4paper,american]{lipics-v2016}
 %\usepackage[USenglish]{babel}
 %\usepackage{microtype}
+
 \bibliographystyle{plainurl}
+
 \title{One exact and one random sampling method to assess the reliability of inferences from network enrichment analysis}
 \titlerunning{Null models for Network Enrichment Analysis} %optional, in case that the title is too long; the running title should fit into the top page column
 
@@ -26,12 +28,11 @@ Royal Institute of Technology -- KTH, Box 1031, 17121 Solna, Sweden\\ \texttt{lu
 %Editor-only macros:: begin (do not touch as author)%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\EventEditors{John Q. Open and Joan R. Acces}
 %\EventNoEds{2}
-\EventLongTitle{18th Workshop on Algorithms in Bioinformatics (WABI 2018)}
-\EventShortTitle{WABI 2018}
-\EventAcronym{WABI}
-\EventYear{2018}
-\EventDate{20–22 August 2018}
-\EventLocation{Helsinki, Finland}
+%\EventShortTitle{WABI 2018}
+%\EventAcronym{WABI}
+%\EventYear{2018}
+%\EventDate{20–22 August 2018}
+%\EventLocation{Helsinki, Finland}
 %\EventLogo{}
 %\SeriesVolume{42}
 %\ArticleNo{23}
@@ -80,9 +81,9 @@ We wanted to evaluate our score under the null hypothesis, $H_0$ : ``There are n
 p(s)=\frac{N(s)/2 +\sum_{s'=s+1}^{S} N(s')}{\sum_{s'=0}^{S} N(s')},
 \label{eq:pval}
 \end{equation}
-where $S$ is the maximal score, $s$, that $Q$ genes can obtain from Equation \ref{eq:sum_ij}.
+where $S$ is the maximal score, $s$, that $Q$ genes can obtain from Equation~(\ref{eq:sum_ij}).
 
-We can reformulate Equation \ref{eq:sum_ij} by defining the number-of-links, $l_i=\sum_{j=1}^P x_{ij}$, which gives us a score,
+We can reformulate Equation~(\ref{eq:sum_ij}) by defining the number-of-links, $l_i=\sum_{j=1}^P x_{ij}$, which gives us a score,
 \begin{equation}
 s=\sum_{i=1}^Q l_i.
 \label{eq:sum_i}
@@ -91,11 +92,10 @@ Such number-of-links, $l_i$, can be pre-computed for all genes in $\mathcal{G}$.
 
 \subsection*{Random sampling algorithm}
 
-We first implemented a random sampling algorithm to assess $N(s)$. We randomly selected sets of $Q$ genes from $\mathcal{G}$. These sets scores were calculated with Equation \ref{eq:sum_i}. We counted the number of times, $F_B(s)$, a score of $s$ was obtained when sampling $B$ gene sets. We see that $F_B(s)$ will approximately have the same shape as $N(s)$ when selecting a large $B$, and we can hence calculate $p$~values by replacing $N$ with $F_B$ in Equation~\ref{eq:pval}. We refer to this procedure as GeneSetMC.
+We first implemented a random sampling algorithm to assess $N(s)$. We randomly selected sets of $Q$ genes from $\mathcal{G}$. These sets scores were calculated with Equation~(\ref{eq:sum_i}). We counted the number of times, $F_B(s)$, a score of $s$ was obtained when sampling $B$ gene sets. We see that $F_B(s)$ will approximately have the same shape as $N(s)$ when selecting a large $B$, and we can hence calculate $p$~values by replacing $N$ with $F_B$ in Equation~(\ref{eq:pval}). We refer to this procedure as GeneSetMC.
 
 \subsection*{Computation of the score distribution}
 
-We also realized that one could calculate the full score distribution, $N(s)$, using dynamic programming. First, we define a function, $k_a=\sum_{\{i:l_i=a\}}1$, giving the number of genes having $a$ links to the investigated pathway, and we define $R=\max_{i}{l_i}$. Furthermore, we define the number of ways, $N_a(s,c)$, to obtain a score $s$, when summing up links for $c$ genes with up to $\le a$ links to the pathway. This helps us formulate the recursion, using the fact that there are $k_a \choose b$ ways to select $b$ from $k_a$ elements, as
 \begin{equation}
 N_a(s,c)=\sum_{b=0}^{k_a}{k_a \choose b} N_{a-1}(s-ab,c-b),
 \end{equation}
@@ -105,10 +105,7 @@ The final score distribution is given by $N(s)=N_R(s,Q)$.
 
 \subsection*{Implementation}
 
-\begin{lstlisting}[caption={
-The central part of the dynamic programing algorithm for finding $N(s)$. The function takes the vector of links per gene, $k_a$, as well as the number of query genes, $Q$ as an input. The function depends on two additional functions {\tt find\_maxscore(k,Q)}, which calculates the maximal score a query of size $Q$ can obtain, and {\tt comb(a,b)}, which calculates $ a \choose b $.
-}
-, label=lst:gensetdp,captionpos=t,float,abovecaptionskip=-\medskipamount]
+\begin{lstlisting}[language=Python, caption={ The central part of the dynamic programing algorithm for finding $N(s)$. The function takes the vector of links per gene, $k_a$, as well as the number of query genes, $Q$ as an input. The function depends on two additional functions {\tt find\_maxscore(k,Q)}, which calculates the maximal score a query of size $Q$ can obtain, and {\tt comb(a,b)}, which calculates $ a \choose b $.}, label=lst:gensetdp, captionpos=t, float, abovecaptionskip=-\medskipamount]
 def genesetdp(k,Q):
     max_s = find_maxscore(k,Q)
     N = np.zeros((max_s+1,Q+1))
@@ -125,11 +122,11 @@ def genesetdp(k,Q):
 There is a memory efficient implementation. We first note that
 
 \[
-N_a(s,c)=\sum_{b=1}^{k_a}{k_a \choose b} N_{a-1}(s-ab,c-b) + N_{a-1}(s,c)=D_a+N_{a-1}(s,c).
+N_a(s,c)=\sum_{b=0}^{k_a}{k_a \choose b} N_{a-1}(s-ab,c-b)=\sum_{b=1}^{k_a}{k_a \choose b} N_{a-1}(s-ab,c-b) + N_{a-1}(s,c).
 \]
 
 
-This enables us to calculate $N$ in-place, at least as long as we update the elements in $N_a$ in a reverse order so that we do not alter elements from $N_{a-1}$ still needed to update subsequent elements. That is, we do not have to copy the dynamic programming matrix in each iteration over $a$, instead, we can add a $D_a$ to previous iterations $N_{a-1}(s,c)$, by nested updates over $s \in \{ S, S-1, \ldots, 0 \}$ and $c \in \{ Q, Q-1, \ldots, 0 \}$. For details see Listing \ref{lst:gensetdp}. We refer to this method as GeneSetDP.
+This enables us to calculate $N$ in-place, at least as long as we update the elements in $N_a$ in a reverse order so that we do not alter elements from $N_{a-1}$ still needed to update subsequent elements. That is, we do not have to copy the dynamic programming matrix in each iteration over $a$, instead, we can add $\sum_{b=1}^{k_a}{k_a \choose b} N_{a-1}(s-ab,c-b)$ to previous iterations $N_{a-1}(s,c)$, by nested updates over $s \in \{ S, S-1, \ldots, 0 \}$ and $c \in \{ Q, Q-1, \ldots, 0 \}$. For details see Listing \ref{lst:gensetdp}. We refer to this method as GeneSetDP.
 
 \section*{Methods}
 
@@ -145,7 +142,7 @@ The source code of an implementation of GeneSetDP and GeneSetMC, as well as code
 
 \section*{Results}
 
-We implemented a Python program that reads network and pathway definition files and scores a query sets against a pathway according to Equation \ref{eq:sum_i}, using GeneSetDP and GeneSetMC described in the Algorithm section, that enabled us to assign $p$~values according to Equation \ref{eq:pval}. We downloaded pathway and network definitions from the BinoX's website and used the same network threshold as BinoX default ($0.7$).
+We implemented a Python program that reads network and pathway definition files and scores a query sets against a pathway according to Equation~(\ref{eq:sum_i}), using GeneSetDP and GeneSetMC described in the Algorithm section, that enabled us to assign $p$~values according to Equation~(\ref{eq:pval}). We downloaded pathway and network definitions from the BinoX's website and used the same network threshold as BinoX default ($0.7$).
 
 To illustrate the $p$~value calculation procedure, we plotted the score distributions $N(s)$ for a query size of 10, 20 and 30 genes in Figure \ref{fig:score_dist}, using GeneSetDP.
 
@@ -174,6 +171,19 @@ We note that the calibration of GeneSetDP is slightly conservative, i.e. the cal
   \label{fig:calibration}
 \end{figure}
 
+To test the consistency of the methods, we also investigated the correspondance between the $p$~values reported by GeneSetDP and GeneSetMC. As can be seen in Figure~\ref{fig:pscatter}, the relative difference is larger for lower $p$~values, likely due to the sampling errors of GeneSetMC.
+
+\begin{figure}[htb]
+  \begin{center}
+		  \begin{tabular}[t]{c}
+        FIXME: Make this scatterplot in log-log, GeneSetDP on x-axis, GeneSetMC on y-axis.
+        (Idea from reviewer comment in email 2018-06-08.)
+%				\includegraphics[width=1.0\textwidth]{FIXME}
+		\end{tabular}
+  \end{center}
+  \caption{{\bf Correspondance between GeneSetDP's and GeneSetMC's $p$~values.} We selected 10000 random sets of 10, 20 and 30 genes from the investigated genome definition and calculated their $p$ values with GeneSetMC and GeneSetDP against the ``Glycolysis/Gluconeogenesis'' pathway. We subsequently plotted the obtained $p$~values against each other .}
+  \label{fig:pscatter}
+\end{figure}
 
 \section*{Discussion}
 
