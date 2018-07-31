@@ -127,7 +127,7 @@ A prevailing technique to infer function from identifications, from molecular bi
 
 \section*{Introduction}
 
-Gene enrichment analysis (GEA) is commonly used to infer function from sets of analytes such as genes, transcripts, proteins or metabolites\cite{tavazoie1999systematic,khatri2012ten}. The technique estimates which functional modules, such as complexes or pathways, are overrepresented among a set of identified analytes. One prominent application of the technique is expression analysis, where GEA is regularly used to assess alternation in pathway activity by examining significantly different concentrations of analytes between biological conditions, such as disease state or treatment group.
+Gene enrichment analysis (GEA) is commonly used to infer function from sets of analytes such as genes, transcripts, proteins or metabolites\cite{tavazoie1999systematic,khatri2012ten,goeman2007analyzing}. The technique estimates which functional modules, such as complexes or pathways, are overrepresented among a set of identified analytes. One prominent application of the technique is expression analysis, where GEA is regularly used to assess alternation in pathway activity by examining significantly different concentrations of analytes between biological conditions, such as disease state or treatment group.
 
 Most GEA methods are assessing the overlap between the investigated set of analytes, the {\em query set}, and a functional module, the {\em pathway set}, using hypergeometric test or a Fisher's exact test. However, variants such as Gene Set Enrichment Analysis (GSEA)\cite{subramanian2005gene} also includes information on expression levels of the analytes of the query set.
 
@@ -181,7 +181,7 @@ N_a(s,c)=\sum_{b=0}^{k_a}{k_a \choose b} N_{a-1}(s-ab,c-b).
 \end{equation}
 We also see that $N_a(s,c)=0$ for all $s<0$, $c<0$ or $a<0$, with the exception of $N_{-1}(0,0)=1$.
 
-The final score distribution is given by $N(s)=N_R(s,Q)$, where $R=\max_{i}{l_i}$, i.e the larges number of links to the pathway from any gene in the genome.
+The final score distribution is given by $N(s)=N_R(s,Q)$, where $R=\max_{i}{l_i}$, i.e the largest number of links to the pathway from any gene in the genome.
 
 
 \subsection*{Implementation}
