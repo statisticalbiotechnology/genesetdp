@@ -1,53 +1,129 @@
-\documentclass[a4paper,american]{lipics-v2016}
-%\usepackage[USenglish]{babel}
-%\usepackage{microtype}
+\documentclass[10pt,letterpaper]{article}
+\usepackage[top=0.85in,left=2.75in,footskip=0.75in]{geometry}
 
-\bibliographystyle{plainurl}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
 
-\title{One exact and one random sampling method to assess the reliability of inferences from network enrichment analysis}
-\titlerunning{Null models for Network Enrichment Analysis} %optional, in case that the title is too long; the running title should fit into the top page column
+% amsmath and amssymb packages, useful for mathematical formulas and symbols
+\usepackage{amsmath,amssymb}
 
-%% Please provide for each author the \author and \affil macro, even when authors have the same affiliation, i.e. for each author there needs to be the  \author and \affil macros
-\author[1]{Gustavo S. Jeuken}
-\author[2]{Lukas K\"{a}ll}
-\affil[1]{Science for Life Laboratory, School of
-Engineering Sciences in Chemistry, Biotechnology and Health,
-Royal Institute of Technology -- KTH, Box 1031, 17121 Solna, Sweden\\ \texttt{gustavo.jeuken@scilifelab.se}}
-\affil[2]{Science for Life Laboratory, School of
-Engineering Sciences in Chemistry, Biotechnology and Health,
-Royal Institute of Technology -- KTH, Box 1031, 17121 Solna, Sweden\\ \texttt{lukas.kall@scilifelab.se}}
-\authorrunning{G. S. Jeuken and L. K\"{a}ll}
+% Use adjustwidth environment to exceed column width (see example table in text)
+\usepackage{changepage}
 
-\Copyright{Gustavo S. Jeuken and Lukas K\"{a}ll}%mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
+% Use Unicode characters when possible
+\usepackage[utf8x]{inputenc}
 
-\subjclass{G.3. Probabilistic algorithms (including Monte Carlo)}% mandatory: Please choose ACM 1998 classifications from http://www.acm.org/about/class/ccs98-html . E.g., cite as "F.1.1 Models of Computation".
-\keywords{Gene Set Analysis; Calibration; Null model; p value; Sampling}% mandatory: Please provide 1-5 keywords
+% textcomp package and marvosym package for additional characters
+\usepackage{textcomp,marvosym}
+
+% cite package, to clean up citations in the main text. Do not remove.
+\usepackage{cite}
+
+% Use nameref to cite supporting information files (see Supporting Information section for more info)
+\usepackage{nameref,hyperref}
+
+% line numbers
+\usepackage[right]{lineno}
+
+% ligatures disabled
+\usepackage{microtype}
+\DisableLigatures[f]{encoding = *, family = * }
+
+% color can be used to apply background shading to table cells only
+\usepackage[table]{xcolor}
+
+% array package and thick rules for tables
+\usepackage{array}
+
+% create "+" rule type for thick vertical lines
+\newcolumntype{+}{!{\vrule width 2pt}}
+
+% create \thickcline for thick horizontal lines of variable length
+\newlength\savedwidth
+\newcommand\thickcline[1]{%
+  \noalign{\global\savedwidth\arrayrulewidth\global\arrayrulewidth 2pt}%
+  \cline{#1}%
+  \noalign{\vskip\arrayrulewidth}%
+  \noalign{\global\arrayrulewidth\savedwidth}%
+}
+
+% \thickhline command for thick horizontal lines that span the table
+\newcommand\thickhline{\noalign{\global\savedwidth\arrayrulewidth\global\arrayrulewidth 2pt}%
+\hline
+\noalign{\global\arrayrulewidth\savedwidth}}
+
+
+% Remove comment for double spacing
+%\usepackage{setspace}
+%\doublespacing
+
+% Text layout
+\raggedright
+\setlength{\parindent}{0.5cm}
+\textwidth 5.25in
+\textheight 8.75in
+
+% Bold the 'Figure #' in the caption and separate it from the title/caption with a period
+% Captions will be left justified
+\usepackage[aboveskip=1pt,labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=off]{caption}
+\renewcommand{\figurename}{Fig}
+
+% Use the PLoS provided BiBTeX style
+\bibliographystyle{plos2015}
+
+% Remove brackets from numbering in List of References
+\makeatletter
+\renewcommand{\@biblabel}[1]{\quad#1.}
+\makeatother
 
 
 
-%Editor-only macros:: begin (do not touch as author)%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\EventEditors{John Q. Open and Joan R. Acces}
-%\EventNoEds{2}
-%\EventShortTitle{WABI 2018}
-%\EventAcronym{WABI}
-%\EventYear{2018}
-%\EventDate{20–22 August 2018}
-%\EventLocation{Helsinki, Finland}
-%\EventLogo{}
-%\SeriesVolume{42}
-%\ArticleNo{23}
-% Editor-only macros::end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Header and Footer with logo
+\usepackage{lastpage,fancyhdr,graphicx}
+\usepackage{epstopdf}
+%\pagestyle{myheadings}
+\pagestyle{fancy}
+\fancyhf{}
+%\setlength{\headheight}{27.023pt}
+%\lhead{\includegraphics[width=2.0in]{PLOS-submission.eps}}
+\rfoot{\thepage/\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrule}{\hrule height 2pt \vspace{2mm}}
+\fancyheadoffset[L]{2.25in}
+\fancyfootoffset[L]{2.25in}
+\lfoot{\today}
 
+%\titlerunning{Null models for Network Enrichment Analysis}
+%\authorrunning{G. S. Jeuken and L. K\"{a}ll}
+
+%\Copyright{Gustavo S. Jeuken and Lukas K\"{a}ll}%mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
 
 
 \begin{document}
+\vspace*{0.2in}
 
-\maketitle
+% Title must be 250 characters or less.
+\begin{flushleft}
+{\Large
+\textbf\newline{One exact and one random sampling method to assess the reliability of inferences from network enrichment analysis} % Please use "sentence case" for title and headings (capitalize only the first word in a title (or heading), the first word in a subtitle (or subheading), and any proper nouns).
+}
+\newline
+% Insert author names, affiliations and corresponding author email (do not include titles, positions, or degrees).
+\\
+Gustavo S. Jeuken\textsuperscript{1} and
+Lukas K\"{a}ll\textsuperscript{1,*}
+\\
+\bigskip
+\textbf{1}Science for Life Laboratory, School of Engineering Sciences in Chemistry, Biotechnology and Health, KTH -- Royal Institute of Technology, Box 1031, 17121 Solna, Sweden
+\\
+\bigskip
 
-\begin{abstract}
-A prevailing technique to infer function from identifications, from molecular biological high-throughput experiments, is gene set enrichment analysis, where the identifications are compared to predefined sets of related genes, so-called pathways. As at least some pathways are known to be incomplete in their annotation, algorithmic efforts have been made to complement them with information from functional association networks, with so-called Network Enrichment Analysis (NEA). Traditionally, the significance of inferences from NEA has been assigned using parametric models, that are tuned by fitting parameters by sampling random network perturbations. Here we instead have designed one dynamic programming  algorithm that calculates the score distribution of NEA scores and makes it possible to assign unbiased mid $p$~values to inferences. We also implemented a random sampling method, carrying out the same task. We demonstrate that our method obtains a superior statistical calibration as compared to the popular NEA inference engine, BinoX.
-
-\end{abstract}
+% Use the asterisk to denote corresponding authorship and provide email address in note below.
+* lukas.kall@scilifelab.se
+\end{flushleft}
+% Please keep the abstract below 300 words
+\section*{Abstract}
+A prevailing technique to infer function from identifications, from molecular biological high-throughput experiments, is gene set enrichment analysis, where the identifications are compared to predefined sets of related genes often refered to as pathways. As at least some pathways are known to be incomplete in their annotation, algorithmic efforts have been made to complement them with information from functional association networks. While the termonolgy vary in the litterature, we will here refer to such methods as Network Enrichment Analysis (NEA). Traditionally, the significance of inferences from NEA has been assigned using parametric models, that are tuned by fitting parameters by sampling random network perturbations. Here we instead have designed one dynamic programming  algorithm that calculates the score distribution of NEA scores and makes it possible to assign unbiased mid $p$~values to inferences. We also implemented a random sampling method, carrying out the same task. We demonstrate that our method obtains a superior statistical calibration as compared to the popular NEA inference engine, BinoX.
 
 \section*{Introduction}
 
@@ -55,7 +131,7 @@ Gene enrichment analysis (GEA) is commonly used to infer function from sets of a
 
 Most GEA methods are assessing the overlap between the investigated set of analytes, the {\em query set}, and a functional module, the {\em pathway set}, using hypergeometric test or a Fisher's exact test. However, variants such as Gene Set Enrichment Analysis (GSEA)\cite{subramanian2005gene} also includes information on expression levels of the analytes of the query set.
 
-A limiting factor of GEA is the pathway definition databases. While \url{http://pathguide.org} list 708 databases of pathway definitions\cite{bader2006pathguide},  some critique has been voiced concerning the completeness and rigor of current pathway databases. Hence efforts have been directed to designing methods that extend the pathway definitions, by functional association networks, like STRING\cite{szklarczyk2014string} and FunCoup\cite{ogris2017funcoup}. Instead of directly examining the overlap between the query and pathway sets, one can evaluate the number of links in the functional association network that connect the query and pathway set\cite{alexeyenko2012network, glaab2012enrichnet, mccormack2013statistical, ogris2016novel, signorelli2016neat}. This is known as Network Enrichment Analysis (NEA).
+A limiting factor of GEA is the pathway definition databases. While \url{http://pathguide.org} list 708 databases of pathway definitions\cite{bader2006pathguide},  some critique has been voiced concerning the completeness and rigor of current pathway databases. Hence efforts have been directed to designing methods that extend the pathway definitions, by functional association networks, like STRING\cite{szklarczyk2014string} and FunCoup\cite{ogris2017funcoup}. Instead of directly examining the overlap between the query and pathway sets, one can evaluate the number of links in the functional association network that connect the query and pathway set\cite{alexeyenko2012network, glaab2012enrichnet, mccormack2013statistical, ogris2016novel, signorelli2016neat}. While the termonolgy vary in the litterature, we will here refer to such methods as {\em Network Enrichment Analysis} (NEA).
 
 The significance of the inferences from NEA is assessed by null models that investigate the number of expected random links from the query gene set to the pathway. Previous efforts have settled for various parametric null distributions, where the parameters are estimated by Monte Carlo-simulations that permute the network definitions by methods with varying degrees of topological conservation.
 
@@ -83,12 +159,14 @@ p(s)=\frac{N(s)/2 +\sum_{s'=s+1}^{S} N(s')}{\sum_{s'=0}^{S} N(s')},
 \end{equation}
 where $S$ is the maximal score, $s$, that $Q$ genes can obtain from Equation~(\ref{eq:sum_ij}).
 
-We can reformulate Equation~(\ref{eq:sum_ij}) by defining the number-of-links, $l_i=\sum_{j=1}^P x_{ij}$, which gives us a score,
+We can reformulate Equation~(\ref{eq:sum_ij}) by defining the number of links, $l_i=\sum_{j=1}^P x_{ij}$, which gives us a score,
 \begin{equation}
 s=\sum_{i=1}^Q l_i.
 \label{eq:sum_i}
 \end{equation}
-Such number-of-links, $l_i$, can be pre-computed for all genes in $\mathcal{G}$.
+Such number of links, $l_i$, can be pre-computed for all genes in $\mathcal{G}$. For later purposes we also define a mapping, $k_a=\sum_{\{i:l_i=a\}}1$, giving the number of genes having $a$ links to the investigated pathway.
+
+
 
 \subsection*{Random sampling algorithm}
 
@@ -96,12 +174,15 @@ We first implemented a random sampling algorithm to assess $N(s)$. We randomly s
 
 \subsection*{Computation of the score distribution}
 
-\begin{equation}
-N_a(s,c)=\sum_{b=0}^{k_a}{k_a \choose b} N_{a-1}(s-ab,c-b),
+An alternative approach is to calculate the exact score distribution using dynamic programming. This can be done if we formulate $N(s)$ as a recrsion, by observing a partial sum function,  $N_a(s,c)$,
+ which expresses the number of ways to select a set of $c$ query genes, each with $\le a$  links to the pathway set and obtain a score of $s$. If we know the distribution of the number of ways to select genes with $\le a-1$ genes,  $N_{a-1}(s,c)$, for all $s$ and $c$,   $N_a(s,c)$ can be determined by investigating the ways to select genes with exactly $a$ links to the investigated pathway.   As there are $k_a \choose b$ ways to select $b$ from $k_a$ elements, there contribution to $N_a(s,c)$ from the selection of  $b$ genes with exactly $a$ links are ${k_a \choose b} N_{a-1}(s-ab,c-b)$. When evaluating all posibile values of $b$ we see that
+ \begin{equation}
+N_a(s,c)=\sum_{b=0}^{k_a}{k_a \choose b} N_{a-1}(s-ab,c-b).
 \end{equation}
-where $N_a(s,c)=0$ for all $s<0$, $c<0$ or $a<0$, with the exception of $N_{-1}(0,0)=1$.
+We also see that $N_a(s,c)=0$ for all $s<0$, $c<0$ or $a<0$, with the exception of $N_{-1}(0,0)=1$.
 
-The final score distribution is given by $N(s)=N_R(s,Q)$.
+The final score distribution is given by $N(s)=N_R(s,Q)$, where $R=\max_{i}{l_i}$, i.e the larges number of links to the pathway from any gene in the genome.
+
 
 \subsection*{Implementation}
 
@@ -144,7 +225,7 @@ The source code of an implementation of GeneSetDP and GeneSetMC, as well as code
 
 We implemented a Python program that reads network and pathway definition files and scores a query sets against a pathway according to Equation~(\ref{eq:sum_i}), using GeneSetDP and GeneSetMC described in the Algorithm section, that enabled us to assign $p$~values according to Equation~(\ref{eq:pval}). We downloaded pathway and network definitions from the BinoX's website and used the same network threshold as BinoX default ($0.7$).
 
-To illustrate the $p$~value calculation procedure, we plotted the score distributions $N(s)$ for a query size of 10, 20 and 30 genes in Figure \ref{fig:score_dist}, using GeneSetDP.
+To illustrate the $p$~value calculation procedure, we plotted the score distributions $N(s)$ for a query size of 10, 20 and 30 genes in Fig \ref{fig:score_dist}, using GeneSetDP.
 
 \begin{figure}[htb]
 	\begin{center}
@@ -156,7 +237,7 @@ To illustrate the $p$~value calculation procedure, we plotted the score distribu
 
 \subsection*{Test of Calibration}
 
-In order to test the statistical calibration of our method, we calculated $p$~values for 10000 random picks of gene sets of size $Q$ from the investigated genome using both GeneSetDP and GeneSetMC with $B = 100000$. As our selection is random and following our null hypothesis, we expected the resulting $p$~values to be uniformly distributed. To test this we plotted the $p$~values against their quantile in Figure \ref{fig:calibration} for $10000$ randomly assembled queries from the human genome. As a comparison, we also added a calibration curve for the popular NEA method BinoX\cite{ogris2016novel}. Here, for all three methods, we are only testing the queries for enrichment, that is, we are only concerned with a higher number of links than expected by random, and this differs from the default BinoX setting which tests for both enrichment and depletion.
+In order to test the statistical calibration of our method, we calculated $p$~values for 10000 random picks of gene sets of size $Q$ from the investigated genome using both GeneSetDP and GeneSetMC with $B = 100000$. As our selection is random and following our null hypothesis, we expected the resulting $p$~values to be uniformly distributed. To test this we plotted the $p$~values against their quantile in Fig \ref{fig:calibration} for $10000$ randomly assembled queries from the human genome. As a comparison, we also added a calibration curve for the popular NEA method BinoX\cite{ogris2016novel}. Here, for all three methods, we are only testing the queries for enrichment, that is, we are only concerned with a higher number of links than expected by random, and this differs from the default BinoX setting which tests for both enrichment and depletion.
 
 We note that the calibration of GeneSetDP is slightly conservative, i.e. the calculated $p$ values are larger than expected. Meanwhile, BinoX appears strongly anti-conservative, that is, the $p$ values are lower than expected.
 
@@ -171,7 +252,7 @@ We note that the calibration of GeneSetDP is slightly conservative, i.e. the cal
   \label{fig:calibration}
 \end{figure}
 
-To test the consistency of the methods, we also investigated the correspondance between the $p$~values reported by GeneSetDP and GeneSetMC. As can be seen in Figure~\ref{fig:pscatter}, the relative difference is larger for lower $p$~values, likely due to the sampling errors of GeneSetMC.
+To test the consistency of the methods, we also investigated the correspondance between the $p$~values reported by GeneSetDP and GeneSetMC. As can be seen in Fig~\ref{fig:pscatter}, the relative difference is larger for lower $p$~values, likely due to the sampling errors of GeneSetMC.
 
 \begin{figure}[htb]
   \begin{center}
