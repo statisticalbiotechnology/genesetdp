@@ -157,9 +157,9 @@ We wanted to evaluate our score under the null hypothesis, $H_0$ : ``There are n
 p(s)=\frac{N(s)/2 +\sum_{s'=s+1}^{S} N(s')}{\sum_{s'=0}^{S} N(s')},
 \label{eq:pval}
 \end{equation}
-where $S$ is the maximal score, $s$, that $Q$ genes can obtain from Equation~(\ref{eq:sum_ij}).
+where $S$ is the maximal score, $s$, that $Q$ genes can obtain from Eq~(\ref{eq:sum_ij}).
 
-We can reformulate Equation~(\ref{eq:sum_ij}) by defining the number of links, $l_i=\sum_{j=1}^P x_{ij}$, which gives us a score,
+We can reformulate Eq~(\ref{eq:sum_ij}) by defining the number of links, $l_i=\sum_{j=1}^P x_{ij}$, which gives us a score,
 \begin{equation}
 s=\sum_{i=1}^Q l_i.
 \label{eq:sum_i}
@@ -170,7 +170,7 @@ Such number of links, $l_i$, can be pre-computed for all genes in $\mathcal{G}$.
 
 \subsection*{Random sampling algorithm}
 
-We first implemented a random sampling algorithm to assess $N(s)$. We randomly selected sets of $Q$ genes from $\mathcal{G}$. These sets scores were calculated with Equation~(\ref{eq:sum_i}). We counted the number of times, $F_B(s)$, a score of $s$ was obtained when sampling $B$ gene sets. We see that $F_B(s)$ will approximately have the same shape as $N(s)$ when selecting a large $B$, and we can hence calculate $p$~values by replacing $N$ with $F_B$ in Equation~(\ref{eq:pval}). We refer to this procedure as GeneSetMC.
+We first implemented a random sampling algorithm to assess $N(s)$. We randomly selected sets of $Q$ genes from $\mathcal{G}$. These sets scores were calculated with Eq~(\ref{eq:sum_i}). We counted the number of times, $F_B(s)$, a score of $s$ was obtained when sampling $B$ gene sets. We see that $F_B(s)$ will approximately have the same shape as $N(s)$ when selecting a large $B$, and we can hence calculate $p$~values by replacing $N$ with $F_B$ in Eq~(\ref{eq:pval}). We refer to this procedure as GeneSetMC.
 
 \subsection*{Computation of the score distribution}
 
@@ -223,7 +223,7 @@ The source code of an implementation of GeneSetDP and GeneSetMC, as well as code
 
 \section*{Results}
 
-We implemented a Python program that reads network and pathway definition files and scores a query sets against a pathway according to Equation~(\ref{eq:sum_i}), using GeneSetDP and GeneSetMC described in the Algorithm section, that enabled us to assign $p$~values according to Equation~(\ref{eq:pval}). We downloaded pathway and network definitions from the BinoX's website and used the same network threshold as BinoX default ($0.7$).
+We implemented a Python program that reads network and pathway definition files and scores a query sets against a pathway according to Eq~(\ref{eq:sum_i}), using GeneSetDP and GeneSetMC described in the Algorithm section, that enabled us to assign $p$~values according to Eq~(\ref{eq:pval}). We downloaded pathway and network definitions from the BinoX's website and used the same network threshold as BinoX default ($0.7$).
 
 To illustrate the $p$~value calculation procedure, we plotted the score distributions $N(s)$ for a query size of 10, 20 and 30 genes in Fig \ref{fig:score_dist}, using GeneSetDP.
 
