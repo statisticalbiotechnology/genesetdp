@@ -1,6 +1,6 @@
 main=genesetdp
 
-all: ${main}.pdf # supplement.pdf diff.pdf
+all: ${main}.pdf coverletter.pdf # supplement.pdf diff.pdf
 
 ${main}.pdf: ${main}.tex # ${main}.bib # img/*
 
@@ -18,12 +18,12 @@ diff.tex: ${main}.tex
 	pdflatex -shell-escape $*.tex
 
 html:
-	rm -fr standard/
+	rm -fr ${main}/
 	latex2html -split 0 ${main}.tex
 
 zip:
-	zip -r standard.zip *.tex *.bib img makefile
+	zip -r ${main}.zip *.tex *.bib img makefile
 
 clean:
 	rm -f *.aux *.bbl *.blg *.log *.out *~ .DS_Store
-	rm -fr standard/
+	rm -fr ${main}/

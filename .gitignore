@@ -2,6 +2,7 @@
 *.pyc
 ## Core latex/pdflatex auxiliary files:
 genesetdp.pdf
+coverletter.pdf
 *.vtc
 *.aux
 *.lof
