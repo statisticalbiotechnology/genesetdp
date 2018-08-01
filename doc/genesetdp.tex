@@ -131,7 +131,7 @@ Over-Representation Analysis (ORA) is commonly used to infer function from sets 
 
 Most ORA methods are assessing the overlap between the investigated set of analytes, the {\em query set}, and a functional module, the {\em pathway set}, using hypergeometric test or a Fisher's exact test. However, variants such as Gene Set Enrichment Analysis (GSEA)\cite{subramanian2005gene} also includes information on expression levels of the analytes of the query set.
 
-A limiting factor of ORA is the pathway definition databases. While \url{http://pathguide.org} list 708 databases of pathway definitions\cite{bader2006pathguide},  some critique has been voiced concerning the completeness and rigor of current pathway databases. Hence efforts have been directed to designing methods that extend the pathway definitions, by functional association networks, like STRING\cite{szklarczyk2014string} and FunCoup\cite{ogris2017funcoup}. Instead of directly examining the overlap between the query and pathway sets, one can evaluate the number of links in the functional association network that connect the query and pathway set\cite{alexeyenko2012network, glaab2012enrichnet, mccormack2013statistical, ogris2016novel, signorelli2016neat}. While the termonolgy vary in the litterature, we will here refer to such methods as {\em Network Enrichment Analysis} (NEA).
+A limiting factor of ORA is the quality of the databases defining pathways. While \url{http://pathguide.org} list 708 databases of pathway definitions\cite{bader2006pathguide},  some critique has been voiced concerning the completeness and rigor of current pathway databases. Hence efforts have been directed to designing methods that extend the pathway definitions, by functional association networks, like STRING\cite{szklarczyk2014string} and FunCoup\cite{ogris2017funcoup}. Instead of directly examining the overlap between the query and pathway sets, one can evaluate the number of links in the functional association network that connect the query and pathway set\cite{alexeyenko2012network, glaab2012enrichnet, mccormack2013statistical, ogris2016novel, signorelli2016neat}. While the termonolgy vary in the litterature, we will here refer to such methods as {\em Network Enrichment Analysis} (NEA).
 
 The significance of the inferences from NEA is assessed by null models that investigate the number of expected random links from the query gene set to the pathway. Previous efforts have settled for various parametric null distributions, where the parameters are estimated by Monte Carlo-simulations that permute the network definitions by methods with varying degrees of topological conservation.
 
@@ -229,7 +229,7 @@ To illustrate the $p$~value calculation procedure, we plotted the score distribu
 
 \begin{figure}[htb]
 	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures/score_distribuition_multiple.png}
+		\includegraphics[width=.9\textwidth]{figures/score_distribuition_multiple.png}
     \end{center}
   \caption{{\bf Score distribution of a query size of 10, 20 and 30 genes against the ``Glycolysis/Gluconeogenesis'' pathway.} GeneSetDP enables us to calculate the full score distribution for a query of a given size, $Q$, i.e. how many ways one can reach a certain score when adding up the scores for $Q$ genes. A red dot marks the maximum score, $S$, for each case.}
   \label{fig:score_dist}
@@ -244,8 +244,8 @@ We note that the calibration of GeneSetDP is slightly conservative, i.e. the cal
 \begin{figure}[htb]
   \begin{center}
 		  \begin{tabular}[t]{c}
-				\includegraphics[width=1.0\textwidth]{figures/calibration_multiple.png} \\
-				\includegraphics[width=0.5\textwidth]{figures/calibration_legend.png}
+				\includegraphics[width=.9\textwidth]{figures/calibration_multiple.png} \\
+				\includegraphics[width=0.45\textwidth]{figures/calibration_legend.png}
 		\end{tabular}
   \end{center}
   \caption{{\bf Calibration of GeneSetDP and GeneSetMC.} We selected 10000 random sets of 10, 20 and 30 genes from the investigated genome definition and calculated their $p$ values with GeneSetMC and GeneSetDP against the ``Glycolysis/Gluconeogenesis'' pathway. To test the $p$~values uniformity we plotted them against their {\em normalized rank}, i.e. each $p$~value's (<rank>-0.5)/<total number of $p$~values>. We also added the calibration curve of BinoX, evaluated on the same random sets. The dashed line shows $y = x$ and the dotted lines $y = 2x$ and $y = 0.5x$, for comparison.}
@@ -257,14 +257,16 @@ To test the consistency of the methods, we also investigated the correspondance 
 \begin{figure}[htb]
   \begin{center}
 		  \begin{tabular}[t]{c}
-        % FIXME: Make this scatterplot in log-log, GeneSetDP on x-axis, GeneSetMC on y-axis.
         % (Idea from reviewer comment in email 2018-06-08.)
-				\includegraphics[width=1.0\textwidth]{figures/scatter_dp_mc.png}
+				\includegraphics[width=.9\textwidth]{figures/scatter_dp_mc.png}
 		\end{tabular}
   \end{center}
   \caption{{\bf Correspondance between GeneSetDP's and GeneSetMC's $p$~values.} We selected 10000 random sets of 10, 20 and 30 genes from the investigated genome definition and calculated their $p$ values with GeneSetMC and GeneSetDP against the ``Glycolysis/Gluconeogenesis'' pathway. We subsequently plotted the obtained $p$~values against each other. Again, the dashed line shows $y = x$ and the dotted lines $y = 2x$ and $y = 0.5x$.}
   \label{fig:pscatter}
+{\em FIXME: Rename x/y-labels to GeneSetXX $p$~value}
 \end{figure}
+
+
 
 \section*{Discussion}
 
