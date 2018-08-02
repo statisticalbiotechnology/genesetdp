@@ -123,7 +123,7 @@ Lukas K\"{a}ll\textsuperscript{1,*}
 \end{flushleft}
 % Please keep the abstract below 300 words
 \section*{Abstract}
-A prevailing technique to infer function from lists of identifications, from molecular biological high-throughput experiments, is over-representation analysis, where the identifications are compared to predefined sets of related genes often refered to as pathways. As at least some pathways are known to be incomplete in their annotation, algorithmic efforts have been made to complement them with information from functional association networks. While the termonolgy vary in the litterature, we will here refer to such methods as Network Enrichment Analysis (NEA). Traditionally, the significance of inferences from NEA has been assigned using parametric models, that are tuned by fitting parameters by sampling random network perturbations. Here we instead have designed one dynamic programming  algorithm that calculates the score distribution of NEA scores and makes it possible to assign unbiased mid $p$~values to inferences. We also implemented a random sampling method, carrying out the same task. We demonstrate that our method obtains a superior statistical calibration as compared to the popular NEA inference engine, BinoX.
+A prevailing technique to infer function from lists of identifications, from molecular biological high-throughput experiments, is over-representation analysis, where the identifications are compared to predefined sets of related genes often referred to as pathways. As at least some pathways are known to be incomplete in their annotation, algorithmic efforts have been made to complement them with information from functional association networks. While the terminology varies in the literature, we will here refer to such methods as Network Enrichment Analysis (NEA). Traditionally, the significance of inferences from NEA has been assigned using parametric models, that are tuned by fitting parameters by sampling random network perturbations. Here we instead have designed one dynamic programming algorithm that calculates the score distribution of NEA scores and makes it possible to assign unbiased mid $p$~values to inferences. We also implemented a random sampling method, carrying out the same task. We demonstrate that our method obtains a superior statistical calibration as compared to the popular NEA inference engine, BinoX.
 
 \section*{Introduction}
 
@@ -131,27 +131,27 @@ Over-Representation Analysis (ORA) is commonly used to infer function from sets 
 
 Most ORA methods are assessing the overlap between the investigated set of analytes, the {\em query set}, and a functional module, the {\em pathway set}, using hypergeometric test or a Fisher's exact test. However, variants such as Gene Set Enrichment Analysis (GSEA)\cite{subramanian2005gene} also includes information on expression levels of the analytes of the query set.
 
-A limiting factor of ORA is the quality of the databases defining pathways. While \url{http://pathguide.org} list 708 databases of pathway definitions\cite{bader2006pathguide},  some critique has been voiced concerning the completeness and rigor of current pathway databases. Hence efforts have been directed to designing methods that extend the pathway definitions, by functional association networks, like STRING\cite{szklarczyk2014string} and FunCoup\cite{ogris2017funcoup}. Instead of directly examining the overlap between the query and pathway sets, one can evaluate the number of links in the functional association network that connect the query and pathway set\cite{alexeyenko2012network, glaab2012enrichnet, mccormack2013statistical, ogris2016novel, signorelli2016neat}. While the termonolgy vary in the litterature, we will here refer to such methods as {\em Network Enrichment Analysis} (NEA).
+A limiting factor of ORA is the quality of the databases defining pathways. While \url{http://pathguide.org} list 708 databases of pathway definitions\cite{bader2006pathguide},  some critique has been voiced concerning the completeness and rigor of current pathway databases. Hence efforts have been directed to designing methods that extend the pathway definitions, by functional association networks, like STRING\cite{szklarczyk2014string} and FunCoup\cite{ogris2017funcoup}. Instead of directly examining the overlap between the query and pathway sets, one can evaluate the number of links in the functional association network that connect the query and pathway set\cite{alexeyenko2012network, glaab2012enrichnet, mccormack2013statistical, ogris2016novel, signorelli2016neat}. While the terminology varies in the literature, we will here refer to such methods as {\em Network Enrichment Analysis} (NEA).
 
 The significance of the inferences from NEA is assessed by null models that investigate the number of expected random links from the query gene set to the pathway. Previous efforts have settled for various parametric null distributions, where the parameters are estimated by Monte Carlo-simulations that permute the network definitions by methods with varying degrees of topological conservation.
 
 As the often used network randomization techniques are not completely random, such methods often introduce an undesirable bias in the statistics. For instance, the actual set of random networks is much larger than the ones one use in such test, namely the random networks that retain a certain topological characteristic\cite{newman2001random}. Also, the somewhat inaccessible process used to randomize networks produces statistics that are equally hard to interpret, as such statistic in practice test a more complex null model than intended.
 
-Users of NEA typically want to test if there is a functional association between a query set of genes and a pathway\cite{alexeyenko2012network}. We argue that such test are much easier implemented as tests of the query set, i.e. is the query set a randomly selected set of genes or is there an overrepresentation of well-connected genes in the query set?
+Users of NEA typically want to test if there is a functional association between a query set of genes and a pathway\cite{alexeyenko2012network}. We argue that such test is much easier implemented as tests of the query set, i.e. is the query set a randomly selected set of genes or is there an overrepresentation of well-connected genes in the query set?
 
 Hence, here we employ a different null model, more directly aimed at modeling the lack of association between query and pathway gene sets, which we formulate as ``there are not more links between the query and pathway gene sets than expected by chance''. We present a dynamic programming algorithm, that we dubbed GeneSetDP, that calculates the exact score distribution of any query of a given size. We also implemented one random sampling algorithm for the same task, that we called GeneSetMC.
 The algorithms enabled us to calculate well-defined statistics of inferences from NEA.  Using simulations we demonstrated that both the algorithms produced unbiased statistics.
 
 \section*{Algorithms}
 
-In network-based gene set analysis one score a query set of genes, $ \mathcal{Q}=\{g_1 \ldots g_Q\}$, from a genome with genes, $\mathcal{G}=\{g_1 \ldots g_G\}$ (i.e. $\mathcal{Q} \subseteq \mathcal{G}$), and how they relate to a pathway, $\mathcal{P}=\{p_1 \ldots p_P\}$. In NEA the pathway maps to the genome through a network, ${x_{ij}}$, where $x_{ij}=1$ if $g_i$ and $p_j$ are connected, or $x_{ij}=0$ otherwise. The pathways are scored by summing up all connections, i.e. the pathway score can be expressed as,
+In network-based gene set analysis one scores a query set of genes, $ \mathcal{Q}=\{g_1 \ldots g_Q\}$, from a genome with genes, $\mathcal{G}=\{g_1 \ldots g_G\}$ (i.e. $\mathcal{Q} \subseteq \mathcal{G}$), and how they relate to a pathway, $\mathcal{P}=\{p_1 \ldots p_P\}$. In NEA the pathway maps to the genome through a network, ${x_{ij}}$, where $x_{ij}=1$ if $g_i$ and $p_j$ are connected, or $x_{ij}=0$ otherwise. The pathways are scored by summing up all connections, i.e. the pathway score can be expressed as,
 
 \begin{equation}
 s=\sum_{i=1}^Q\sum_{j=1}^P x_{ij}.
 \label{eq:sum_ij}
 \end{equation}
 
-We wanted to evaluate our score under the null hypothesis, $H_0$ : ``There are not more links between the query and pathway gene sets than expected by chance''. This  formulation translates to calculating the distribution of scores that would occur if the $Q$ query genes are randomly selected from the genome, and see how frequently a score as extreme or more extreme than the current score would appear in that distribution. Hence, we wanted to determine a score distribution, {\em i.e.} the number of ways, $N(s)$, we can pick $Q$ genes and obtaining a score, $s$, which we will give two methods for below. Given such a score distribution, we can express a mid $p$~value\cite{lancaster1961significance,hwang2001optimality} for obtaining a score, $s$, as,
+We wanted to evaluate our score under the null hypothesis, $H_0$ : ``There are not more links between the query and pathway gene sets than expected by chance''. This formulation translates to calculating the distribution of scores that would occur if the $Q$ query genes are randomly selected from the genome, and see how frequently a score as extreme or more extreme than the current score would appear in that distribution. Hence, we wanted to determine a score distribution, {\em i.e.} the number of ways, $N(s)$, we can pick $Q$ genes and obtain a score, $s$, which we will give two methods for below. Given such a score distribution, we can express a mid $p$~value\cite{lancaster1961significance,hwang2001optimality} for obtaining a score, $s$, as,
 
 \begin{equation}
 p(s)=\frac{N(s)/2 +\sum_{s'=s+1}^{S} N(s')}{\sum_{s'=0}^{S} N(s')},
@@ -200,6 +200,7 @@ def genesetdp(k,Q):
                         N[s,c] += comb(k[a], b) * N[s-a*b,c-b]
     return N[:,q]
 \end{lstlisting}
+
 There is a memory efficient implementation. We first note that
 
 \[
@@ -252,7 +253,7 @@ We note that the calibration of GeneSetDP is slightly conservative, i.e. the cal
   \label{fig:calibration}
 \end{figure}
 
-To test the consistency of the methods, we also investigated the correspondance between the $p$~values reported by GeneSetDP and GeneSetMC. As can be seen in Figure~\ref{fig:pscatter}, the results are consistent as expected.
+To test the consistency of the methods, we also investigated the correspondence between the $p$~values reported by GeneSetDP and GeneSetMC. As can be seen in Figure~\ref{fig:pscatter}, the results are consistent as expected.
 
 \begin{figure}[htb]
   \begin{center}
@@ -280,7 +281,7 @@ We made an explicit definition of the null hypothesis we employed, which centers
 
 \section*{Acknowledgments}
 
-LK was supported by a grant from Swedish Foundation for Strategic Research (BD15-0043).
+LK was supported by a grant from the Swedish Foundation for Strategic Research (BD15-0043).
 
 \bibliography{./refs.bib}
 
