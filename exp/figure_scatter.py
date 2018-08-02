@@ -36,10 +36,10 @@ ax1.set_title('Q = 10', fontsize=18)
 ax2.set_title('Q = 20', fontsize=18)
 ax3.set_title('Q = 30', fontsize=18)
 
-ax1.set_ylabel('GeneSetDP $p$-values', fontsize = 16)
-ax1.set_xlabel('GeneSetMC $p$-values', fontsize = 16)
-ax2.set_xlabel('GeneSetMC $p$-values', fontsize = 16)
-ax3.set_xlabel('GeneSetMC $p$-values', fontsize = 16)
+ax1.set_ylabel('GeneSetDP $p$-value', fontsize = 16)
+ax1.set_xlabel('GeneSetMC $p$-value', fontsize = 16)
+ax2.set_xlabel('GeneSetMC $p$-value', fontsize = 16)
+ax3.set_xlabel('GeneSetMC $p$-value', fontsize = 16)
 
 for ax in [ax1,ax2,ax3]:
     ax.xaxis.set_tick_params(labelsize=12)
