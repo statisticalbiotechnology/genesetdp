@@ -1,0 +1,48 @@
+\documentclass[a4paper]{article}
+\usepackage{url}
+\usepackage[margin=1in]{geometry}
+\newcommand{\breview}{\begin{quotation}\begin{bf}\noindent}
+\newcommand{\ereview}{\end{bf}\end{quotation}}
+\newcommand{\reviewbullet}[1]{\breview \begin{itemize}\item #1 \end{itemize}\ereview}
+\begin{document}
+
+Dear editors:
+
+We have attached a revised version of our manuscript ``A simple null model for inferences from network enrichment analysis'', and a diff
+against our original version. We have also answered the reviewers comments
+below.
+
+Yours Sincerely,\\[1.5cm]
+Gustavo Jeuken and
+Lukas K\"{a}ll
+\\
+
+
+\section*{Reviewer \#1}
+\breview
+Jeunken and Käll describe a method for generating a null distribution for so called ``network enrichment analyses'', which are sometimes framed as ``crosstalk'' analyses. The only data presented is showing that the method generates accurate pvalues under the null.
+\medskip
+As far as I can tell the work is technically correct. Their statement of the null hypothesis they are testing is sufficiently precise. I agree with the authors that their conceptualization of the problem is simpler than methods like BinoX. But I disagree that the interpretation can be assumed to be meaningful, and the authors provide no evidence.
+\ereview
+The reviewer points out that the manuscript only discusses the calibration of $p$ values, and that actually never uses any positive tests.
+\ldots
+It is also worth noting that according to the Criteria For Publication PLOS ONE, (\url{https://journals.plos.org/plosone/s/criteria-for-publication}) conceved meaningfulness is not a publication criteria.
+
+\medskip
+
+\breview
+They claim that BinoX yields very inaccurate p-values. If the results yielded by the proposed method are basically the same as BinoX (in terms of ranks), then there is no major problem. But the authors state that they don’t want to get into evaluating “performance in terms of sensitivity”. I find this disingenuous; they have to at least show how their ranked results compare to BinoX on real data and do some kind of benchmarking. This is important because I believe there is a difference in the null hypothesis stated in the current work and that used by BinoX that makes the comparison presented here unfair – they are not testing the same thing.
+
+\medskip
+The crux is that the method proposed here focuses on the properties of the query genes; randomly sampling query genes makes the proposed method a test of whether the query genes are unusual, not necessarily specifically with respect to a particular pathway. For example, if the query contains a hub gene (assuming hubs are rare) then it might be found “significantly” connected to many pathways. The “feature unlikely to occur by chance” is that the query contains a hub gene, not that it connects to many pathways. To state it in an extreme way, in this situation biologist should skip the pathway analysis and just take note of the fact that the query includes a hub. Using the authors’ method without this insight could lead to very misleading conclusions.
+
+\medskip
+As I understand it, BinoX tries to account for these difficulties by modeling realizations of the network that retain key topological properties like node degree distribution while holding the query constant (in effect). The current authors criticize the BinoX approach, but ignore the problem entirely. A closer (but not very close) approximation of the BinoX approach might be, for the Monte Carlo method proposed here, to bias the sampling of Q’ from G such that the distribution of the node degrees of the genes in Q’ resembles the distribution of the actual query set of interest Q. In any case, I believe that the BinoX approach is not directly comparable. The relationship needs to be discussed and some demonstration of the method yielding useful and specific results is needed. If the authors cannot do this then they must remove the discussion of BinoX. Without that, and without any benchmarking, the paper is essentially about an algorithm to compute N(s), with no biological content or relevance.
+\ereview
+
+
+\breview
+Minor: There are some typos I noted such as 'litterature' and 'posibile'.
+\ereview
+
+\end{document}

@@ -1,6 +1,6 @@
 main=genesetdp
 
-all: ${main}.pdf coverletter.pdf # supplement.pdf diff.pdf
+all: ${main}.pdf coverletter.pdf response.pdf # supplement.pdf diff.pdf
 
 ${main}.pdf: ${main}.tex # ${main}.bib # img/*
 
