@@ -139,12 +139,15 @@ The significance of the inferences from NEA is assessed by null models that inve
 
 % As the often used network randomization techniques are not completely random, such methods often introduce an undesirable bias in the statistics. For instance, the actual set of random networks is much larger than the ones one use in such test, namely the random networks that retain a certain topological characteristic\cite{newman2001random}. 
 % Also, the somewhat inaccessible process used to randomize networks produces statistics that are equally hard to interpret, as such statistic in practice test a more complex null model than intended.
-The methods that are often used for network randomization, while computationaly efficient, are often very mentally untractable. FIXME: follow the reasoning
-We will then come to a null hypothesis for which rejection is uninformative, defeating the purpose of doing a statistical test in the first place.
+The methods that are used for network randomization, while computationaly efficient, are often mentally untractable as they include a big number of steps that are subject to complex constrains.
+As an example, in the link assignment plus second-order conservation method \cite{mccormack2013statistical}, links are assigned at random, but sequentially and at each step they must follow contrains that essentially depends on all previous steps.
+And so, while in the end we do come to a network that is randomized while preserving some desired topological features, the nested constrains make it very hard to describe the probability space to which this network belongs. 
+We will then come to a null hypothesis for which rejection is uninformative, defeating the purpose the statistical test.
 
 Users of NEA typically want to test if there is a functional association between a query set of genes and a pathway\cite{alexeyenko2012network}. We argue that such test is much easier implemented as tests of the query set, i.e. is the query set a randomly selected set of genes or is there an over representation of well-connected genes in the query set?
 
 Hence, here we employ a different null model, more directly aimed at modeling the lack of association between query and pathway gene sets, which we formulate as ``there are not more links between the query and pathway gene sets than expected by chance''. We present a dynamic programming algorithm, that we dubbed GeneSetDP, that calculates the exact score distribution of any query of a given size. We also implemented one random sampling algorithm for the same task, that we called GeneSetMC.
+Of note is the fact that our dinamic programming algorithm does not make any assumptions on the nature of the probability distribuition and instead calculates the exact distribuition over a given network.
 The algorithms enabled us to calculate well-defined statistics of inferences from NEA.  Using simulations we demonstrated that both the algorithms produced unbiased statistics.
 
 \section*{Algorithms}
@@ -244,7 +247,7 @@ To illustrate the $p$~value calculation procedure, we plotted the score distribu
 \subsection*{Test of Calibration}
 
 In order to test the statistical calibration of our method, we calculated $p$~values for 10000 random picks of gene sets of size $Q$ from the investigated genome using both GeneSetDP and GeneSetMC with $B = 100000$. As our selection is random and following our null hypothesis, we expected the resulting $p$~values to be uniformly distributed. To test this we plotted the $p$~values against their quantile in Fig \ref{fig:calibration} for $10000$ randomly assembled queries from the human genome. As a comparison, we also added a calibration curve for the popular NEA method BinoX\cite{ogris2016novel}. Here, for all three methods, we are only testing the queries for enrichment, that is, we are only concerned with a higher number of links than expected by random, and this differs from the default BinoX setting which tests for both enrichment and depletion. 
-Also of note is the fact that, while we display all methods in the same figure, each represents its own calibration, and that the Spearman's correlation between BinoX and the other methods is fairly low ($0.49$, $0.55$ and $0.55$ for $Q=10$, $20$ and $30$ respectively)
+Also of note is the fact that, while we display all methods in the same figure, each represents its own calibration, and that the Spearman's correlation between BinoX and the other methods is fairly low ($\rho = 0.49$, $0.55$ and $0.55$ for $Q=10$, $20$ and $30$ respectively)
 
 We note that the calibration of GeneSetDP is slightly conservative, i.e. the calculated $p$ values are larger than expected. Meanwhile, BinoX appears strongly anti-conservative, that is, the $p$ values are lower than expected.
 
