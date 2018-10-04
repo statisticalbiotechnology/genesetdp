@@ -146,9 +146,9 @@ We will then come to a null hypothesis for which rejection is uninformative, def
 
 Users of NEA typically want to test if there is a functional association between a query set of genes and a pathway\cite{alexeyenko2012network}. We argue that such test is much easier implemented as tests of the query set, i.e. is the query set a randomly selected set of genes or is there an over representation of well-connected genes in the query set?
 
-Hence, here we employ a different null model, more directly aimed at modeling the lack of association between query and pathway gene sets, which we formulate as ``there are not more links between the query and pathway gene sets than expected by chance''. We present a dynamic programming algorithm, that we dubbed GeneSetDP, that calculates the exact score distribution of any query of a given size. We also implemented one random sampling algorithm for the same task, that we called GeneSetMC.
-Of note is the fact that our dinamic programming algorithm does not make any assumptions on the nature of the probability distribuition and instead calculates the exact distribuition over a given network.
-The algorithms enabled us to calculate well-defined statistics of inferences from NEA.  Using simulations we demonstrated that both the algorithms produced unbiased statistics.
+Hence, here we employ a different null model, more directly aimed at modeling the lack of association between query and pathway gene sets, which we formulate as ``there are not more links between the query and pathway gene sets than expected by chance''. We present a dynamic programming algorithm, that we dubbed GeneSetDP, that calculates the exact score distribution of any query of a given size, noting here that we do not need to make any assumptions on the nature of the score distribuition. We also implemented one random sampling algorithm for the same task, that we called GeneSetMC.
+The algorithms enabled us to calculate well-defined statistics of inferences from NEA that we argue is more intuitive from an end-user perspective and thus more likely to be interpreted in a correct manner.
+Using simulations we demonstrated that both the algorithms produced unbiased statistics.
 
 \section*{Algorithms}
 
