@@ -4,6 +4,8 @@
 genesetdp.pdf
 coverletter.pdf
 response.pdf
+diff.pdf
+diff.tex
 *.vtc
 *.aux
 *.lof
