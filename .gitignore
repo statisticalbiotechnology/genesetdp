@@ -3,6 +3,7 @@
 ## Core latex/pdflatex auxiliary files:
 genesetdp.pdf
 coverletter.pdf
+response.pdf
 *.vtc
 *.aux
 *.lof
