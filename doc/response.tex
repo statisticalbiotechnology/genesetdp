@@ -33,6 +33,7 @@ They claim that BinoX yields very inaccurate p-values. If the results yielded by
 \ereview
 
 We fully agree with the reviewer that the null of BinoX is different that GeneSetDP. In fact that is the purpose of our manuscript. The reason why no sensitivity test is made is of course that there is no way to compete in sensitivity against a method with inflated statistics. If the yardstick is flawed no comparison can be made. Here we establish a fair yardstick to compare against. In our manuscript we are not trying to sell a new method for NEA, we are merely trying to convince the field that they should report statistics that makes sense to a user.
+We would also like to stress that we use the same scoring system as BinoX (number of links).
 
 \breview
 The crux is that the method proposed here focuses on the properties of the query genes; randomly sampling query genes makes the proposed method a test of whether the query genes are unusual, not necessarily specifically with respect to a particular pathway. For example, if the query contains a hub gene (assuming hubs are rare) then it might be found ``significantly'' connected to many pathways. The ``feature unlikely to occur by chance'' is that the query contains a hub gene, not that it connects to many pathways. To state it in an extreme way, in this situation biologist should skip the pathway analysis and just take note of the fact that the query includes a hub. Using the authors’ method without this insight could lead to very misleading conclusions.
