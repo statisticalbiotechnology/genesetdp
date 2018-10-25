@@ -214,7 +214,7 @@ To illustrate the $p$~value calculation procedure, we plotted the score distribu
 
 \begin{figure}[htb]
 	\begin{center}
-		\includegraphics[width=.9\textwidth]{figures/score_distribuition_multiple.png}
+		% \includegraphics[width=.9\textwidth]{figures/score_distribuition_multiple.png}
     \end{center}
   \caption{{\bf Score distribution of a query size of 10, 20 and 30 genes against the ``Glycolysis/Gluconeogenesis'' pathway.} GeneSetDP enables us to calculate the full score distribution for a query of a given size, $Q$, i.e. how many ways one can reach a certain score when adding up the scores for $Q$ genes. A red dot marks the maximum score, $S$, for each case.}
   \label{fig:score_dist}
@@ -230,8 +230,7 @@ We note that the calibration of GeneSetDP is slightly conservative, i.e. the cal
 \begin{figure}[htb]
   \begin{center}
 		  \begin{tabular}[t]{c}
-				\includegraphics[width=.9\textwidth]{figures/calibration_multiple.png} \\
-				\includegraphics[width=0.45\textwidth]{figures/calibration_legend.png}
+				% \includegraphics[width=.9\textwidth]{figures/calibration.png}
 		\end{tabular}
   \end{center}
   \caption{{\bf Calibration of GeneSetDP and GeneSetMC.} We selected 10000 random sets of 10, 20 and 30 genes from the investigated genome definition and calculated their $p$ values with GeneSetMC and GeneSetDP against the ``Glycolysis/Gluconeogenesis'' pathway. To test the $p$~values uniformity we plotted them against their {\em normalized rank}, i.e. each $p$~value's (<rank>-0.5)/<total number of $p$~values>. We also added the calibration curve of BinoX, evaluated on the same random sets. The dashed line shows $y = x$ and the dotted lines $y = 2x$ and $y = 0.5x$, for comparison.}
@@ -244,7 +243,7 @@ To test the consistency of the methods, we also investigated the correspondence 
   \begin{center}
 		  \begin{tabular}[t]{c}
         % (Idea from reviewer comment in email 2018-06-08.)
-				\includegraphics[width=.9\textwidth]{figures/scatter_dp_mc.png}
+				% \includegraphics[width=.9\textwidth]{figures/scatter_dp_mc.png}
 		\end{tabular}
   \end{center}
   \caption{{\bf Correspondence between GeneSetDP's and GeneSetMC's $p$~values.} We selected 10000 random sets of 10, 20 and 30 genes from the investigated genome definition and calculated their $p$ values with GeneSetMC and GeneSetDP against the ``Glycolysis/Gluconeogenesis'' pathway. We subsequently plotted the obtained $p$~values against each other. Again, the dashed line shows $y = x$ and the dotted lines $y = 2x$ and $y = 0.5x$.}
