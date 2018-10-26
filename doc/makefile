@@ -1,11 +1,11 @@
 main=genesetdp
 
-all: ${main}.pdf coverletter.pdf response.pdf diff.pdf  # supplement.pdf 
+all: ${main}.pdf coverletter.pdf response.pdf diff.pdf  # supplement.pdf
 
 ${main}.pdf: ${main}.tex # ${main}.bib # img/*
 
 diff.tex: ${main}.tex
-	git show plosone_1:./$? > /tmp/$?
+	git show plosone_2:./$? > /tmp/$?
 	latexdiff /tmp/$? $? > diff.tex
 
 
