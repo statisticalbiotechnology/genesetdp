@@ -117,13 +117,13 @@ The significance of the inferences from NEA is assessed by null models that inve
 
 % As the often used network randomization techniques are not completely random, such methods often introduce an undesirable bias in the statistics. For instance, the actual set of random networks is much larger than the ones one use in such test, namely the random networks that retain a certain topological characteristic\cite{newman2001random}.
 % Also, the somewhat inaccessible process used to randomize networks produces statistics that are equally hard to interpret, as such statistic in practice test a more complex null model than intended.
-The methods that are used for network randomization are often mentally untractable, as they include a big number of steps that are subject to complex constraints.
+Yet, the methods that are used for network randomization are often mentally untractable, as they include a big number of steps that are subject to complex constraints.
 As an example, in the link assignment plus second-order conservation method \cite{mccormack2013statistical}, links are assigned at random, but sequentially and at each step they must follow constraints that depend on previous link assignments.
 While this results in a network that is both randomized and contains some desired topological features, preserved from the original network, these nested constraints make it very hard to verify that the resulting network is representative. In theory there is a space of all possible networks that could be made up from a certain number of nodes and node degree distribution, however, it is not clear that the link assignment and second-order conservation method samples evenly from that distribution.  And, if the resulting networks are not representative, the rejection of the resulting null hypothesis is uninformative, defeating the purpose of the statistical test.
 
 We argue that the network perturbation methods used in most flavours of NEA is a red herring. Users of NEA do not differ from users of ORA and want to test an association between a query set of genes and pathways.  The typical user has used an experimental or computational method to derive a set of query genes and wants to know if it is a random set, or if it is enriched with respect to a pathway.  In this question, the introduction of a network is not relevant. A network may help to increase the sensitivity of ORA methods, but for practical reasons it is better left out of the null hypothesis. We argue that tests of significance in this type of analysis is naturally implemented as tests of the query set. That is, is the query set a randomly selected set of genes or is there an over-representation of well-connected genes in the query set?
 
-Hence, here we employ a different null model, more directly aimed at modelling the lack of association between query and pathway gene sets, which we formulate as ``there are not more links between the query and pathway gene sets than expected by chance''. We present a dynamic programming algorithm, which we dubbed GeneSetDP, that calculates the exact score distribution of any query of a given size. We also implemented one random sampling algorithm for the same task, that we called GeneSetMC. Both algorithms circumvent the need of parametric score distributions for the calculations of significance.
+Hence, here we employ a different null model, more directly aimed at modelling the lack of association between query and pathway gene sets, which we formulate as ``there are not more links between the query and pathway gene sets than expected by chance''. We present a dynamic programming algorithm, which we dubbed GeneSetDP, that calculates the exact score distribution of any query of a given size. We also implemented one random sampling algorithm for the same task, that we called GeneSetMC. Both algorithms circumvent the need for parametric score distributions for the calculations of significance.
 Combining the GeneSetDP and GeneSetMC with the scoring system of the popular method BinoX, we use simulations to demonstrate that both our algorithms produced unbiased statistics.
 
 \section*{Algorithms}
@@ -268,6 +268,89 @@ Furthermore, network randomization methods focus on significance of the links in
 
 LK was supported by a grant from the Swedish Foundation for Strategic Research (BD15-0043).
 
-\bibliography{./refs.bib}
+\begin{thebibliography}{10}
+
+\bibitem{tavazoie1999systematic}
+Tavazoie S, Hughes JD, Campbell MJ, Cho RJ, Church GM.
+\newblock Systematic determination of genetic network architecture.
+\newblock Nature genetics. 1999;22(3):281.
+
+\bibitem{khatri2012ten}
+Khatri P, Sirota M, Butte AJ.
+\newblock Ten years of pathway analysis: current approaches and outstanding
+  challenges.
+\newblock PLoS computational biology. 2012;8(2):e1002375.
+
+\bibitem{goeman2007analyzing}
+Goeman JJ, B\"{u}hlmann P.
+\newblock Analyzing gene expression data in terms of gene sets: methodological
+  issues.
+\newblock Bioinformatics. 2007;23(8):980--987.
+
+\bibitem{subramanian2005gene}
+Subramanian A, Tamayo P, Mootha VK, Mukherjee S, Ebert BL, Gillette MA, et~al.
+\newblock Gene set enrichment analysis: a knowledge-based approach for
+  interpreting genome-wide expression profiles.
+\newblock Proceedings of the National Academy of Sciences.
+  2005;102(43):15545--15550.
+
+\bibitem{bader2006pathguide}
+Bader GD, Cary MP, Sander C.
+\newblock Pathguide: a pathway resource list.
+\newblock Nucleic acids research. 2006;34(suppl\_1):D504--D506.
+
+\bibitem{szklarczyk2014string}
+Szklarczyk D, Franceschini A, Wyder S, Forslund K, Heller D, Huerta-Cepas J,
+  et~al.
+\newblock STRING v10: protein--protein interaction networks, integrated over
+  the tree of life.
+\newblock Nucleic acids research. 2014;43(D1):D447--D452.
+
+\bibitem{ogris2017funcoup}
+Ogris C, Guala D, Kaduk M, Sonnhammer EL.
+\newblock FunCoup 4: new species, data, and visualization.
+\newblock Nucleic acids research. 2017;46(D1):D601--D607.
+
+\bibitem{alexeyenko2012network}
+Alexeyenko A, Lee W, Pernemalm M, Guegan J, Dessen P, Lazar V, et~al.
+\newblock Network enrichment analysis: extension of gene-set enrichment
+  analysis to gene networks.
+\newblock {BMC} bioinformatics. 2012;13(1):226.
+
+\bibitem{glaab2012enrichnet}
+Glaab E, Baudot A, Krasnogor N, Schneider R, Valencia A.
+\newblock EnrichNet: network-based gene set enrichment analysis.
+\newblock Bioinformatics. 2012;28(18):i451--i457.
+
+\bibitem{mccormack2013statistical}
+McCormack T, Frings O, Alexeyenko A, Sonnhammer EL.
+\newblock Statistical assessment of crosstalk enrichment between gene groups in
+  biological networks.
+\newblock {PloS} one. 2013;8(1):e54945.
+
+\bibitem{ogris2016novel}
+Ogris C, Guala D, Helleday T, Sonnhammer EL.
+\newblock A novel method for crosstalk analysis of biological networks:
+  improving accuracy of pathway annotation.
+\newblock Nucleic acids research. 2016;45(2):e8--e8.
+
+\bibitem{signorelli2016neat}
+Signorelli M, Vinciotti V, Wit EC.
+\newblock NEAT: an efficient network enrichment analysis test.
+\newblock BMC bioinformatics. 2016;17(1):352.
+
+\bibitem{lancaster1961significance}
+Lancaster HO.
+\newblock Significance tests in discrete distributions.
+\newblock Journal of the American Statistical Association.
+  1961;56(294):223--234.
+
+\bibitem{hwang2001optimality}
+Hwang JG, Yang MC.
+\newblock An optimality theory for mid p--values In 2$\times$ 2 contingency
+  tables.
+\newblock Statistica Sinica. 2001; p. 807--826.
+
+\end{thebibliography}
 
 \end{document}
